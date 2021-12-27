@@ -83,8 +83,7 @@ public class Ball implements Runnable {
 			setYDirection(-2);
 		}
 	}
-	
-	@Override
+		@Override
 	public void run() {
 		try {
 			while(true) {
