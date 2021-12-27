@@ -52,7 +52,8 @@ public class Ball implements Runnable {
 		g.setColor(Color.WHITE);
 		g.fillRect(ball.x, ball.y, ball.width, ball.height);
 	}
-	
+
+
 	public void collision(){
         if(ball.intersects(p1.paddle))
             setXDirection(+1);
