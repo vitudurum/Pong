@@ -16,7 +16,7 @@ public class Pong extends JFrame {
 	
 	Image dbImage;
 	Graphics dbGraphics;
-	Font stringFont = new Font( "SansSerif", Font.PLAIN, 150 );
+	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
 	//ball object
 	static Ball b = new Ball(250, 200);
 	
