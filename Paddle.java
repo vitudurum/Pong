@@ -15,89 +15,83 @@ public class Paddle implements Runnable{
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		paddle = new Rectangle(x, y, 10, 50);
+		paddle = new Rectangle(x, y, 10, 100);
 		}
 		
 	public void keyPressed(KeyEvent e) {
-		switch(id) {
-		default:
-			System.out.println("Please enter a Valid ID in paddle contructor");
-			break;
-		case 1:
-			if(e.getKeyCode() == KeyEvent.VK_W) {
-				setYDirection(-1);
-			if(e.getKeyCode() == KeyEvent.VK_S) {
-				setYDirection(1);
+			if (id==0) {
+				if (e.getKeyCode() == KeyEvent.VK_W) {
+					setYDirection(-5);
+				}
+				if (e.getKeyCode() == KeyEvent.VK_S) {
+					setYDirection(5);
+				}
 			}
-			break;
+			if (id==1) {
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					setYDirection(-5);
+				}
+				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					setYDirection(5);
+				}
 			}
-		case 2:
-			if(e.getKeyCode() == KeyEvent.VK_UP) {
-				setYDirection(-1);
-			}
-			if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-				setYDirection(1);
-			}
-			break;
-	}
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		switch(id) {
-		default:
-			System.out.println("Please enter a Valid ID in paddle contructor");
-			break;
-		case 1:
+	if (id==0) {
+		if (e.getKeyCode() == e.VK_W) {
+		setYDirection(0);
+	}
+	if (e.getKeyCode() == e.VK_S) {
+		setYDirection(0);
+	}
+	}
+	if (id==1)
+{
 		if(e.getKeyCode() == e.VK_UP) {
 			setYDirection(0);
 		}
 		if(e.getKeyCode() == e.VK_DOWN) {
 			setYDirection(0);
 		}
-		break;
-		case 2:
-			
-		if(e.getKeyCode() == e.VK_W) {
-			setYDirection(0);
-		}
-		if(e.getKeyCode() == e.VK_S) {
-			setYDirection(0);
-		}
-		break;
-	}
+}
 	}
 	public void setYDirection(int yDir) {
 		yDirection = yDir;
 	}
 	
 	public void move() {
-	 	paddle.y += yDirection;
-	 	if (paddle.y <= 15)
+
+	 	paddle.y = paddle.y+yDirection;
+
+		if (paddle.y <= 15)
 	 		paddle.y = 15;
-	 	if (paddle.y >= 340);
-	 		paddle.y = 340;
+
+	 	if (paddle.y > 1030)
+			 paddle.y = 1030;
+
+		//System.out.println("["+this.id+"]"+yDirection);
+		//System.out.println("["+this.id+"]"+paddle.y);
+
 	}
 	public void draw(Graphics g) {
-		switch(id) {
-		default:
-			System.out.println("Please enter a Valid ID in paddle contructor");
-			break;
-		case 1:
+
+		if (id==0) {
 			g.setColor(Color.CYAN);
 			g.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
-			break;
-		case 2:
+		}
+		if (id==1)
+		{
 			g.setColor(Color.pink);
 			g.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
-			break;
-		}
+			}
 	}
 	@Override
 	public void run() {
 		try {
 			while(true) {
 				move();
-				Thread.sleep(7);
+				Thread.sleep(8);
 			}
 		} catch(Exception e) { System.err.println(e.getMessage()); }
 	}

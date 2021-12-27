@@ -14,8 +14,8 @@ public class Ball implements Runnable {
 	
 	int p1score, p2score;
 	
-	Paddle p1 = new Paddle(10, 25, 1);
-	Paddle p2 = new Paddle(485, 25, 2);
+	Paddle p1 = new Paddle(10, 25, 0);
+	Paddle p2 = new Paddle(1900, 25, 1);
 	
 	Rectangle ball;
 
@@ -38,7 +38,7 @@ public class Ball implements Runnable {
 		setYDirection(rYDir);
 		
 		//create "ball"
-		ball = new Rectangle(this.x, this.y, 15, 15);
+		ball = new Rectangle(this.x, this.y, 25, 25);
 	}
 	
 	public void setXDirection(int xDir){
@@ -65,21 +65,21 @@ public class Ball implements Runnable {
 		ball.y += yDirection;
 		//bounce the ball when it hits the edge of the screen
 		if (ball.x <= 0) {
-			setXDirection(+1);
+			setXDirection(+2);
 			p2score++;
 			
 	}
-		if (ball.x >= 485) {
-			setXDirection(-1);
+		if (ball.x >= 1920) {
+			setXDirection(-2);
 			p1score++;
 		}
 		
 		if (ball.y <= 15) {
-			setYDirection(+1);
+			setYDirection(+2);
 		}
 		
-		if (ball.y >= 385) {
-			setYDirection(-1);
+		if (ball.y >= 1060) {
+			setYDirection(-2);
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class Ball implements Runnable {
 		try {
 			while(true) {
 				move();
-				Thread.sleep(8);
+				Thread.sleep(5);
 			}
 		}catch(Exception e) { System.err.println(e.getMessage()); }
 

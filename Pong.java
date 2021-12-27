@@ -10,20 +10,20 @@ import javax.swing.*;
 public class Pong extends JFrame {
 	
 	//screen size variables.
-	int gWidth = 500;
-	int gHeight = 400;
+	int gWidth = 1920;
+	int gHeight = 1080;
 	Dimension screenSize = new Dimension(gWidth, gHeight);
 	
 	Image dbImage;
 	Graphics dbGraphics;
-	
+	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
 	//ball object
 	static Ball b = new Ball(250, 200);
 	
 	
 	//constructor for window
 	public Pong() {
-		this.setTitle("Pong!");
+		this.setTitle("Maege's Pong!");
 		this.setSize(screenSize);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -57,10 +57,10 @@ public class Pong extends JFrame {
 		b.draw(g);
 		b.p1.draw(g);
 		b.p2.draw(g);
-		
+		g.setFont(stringFont);
 		g.setColor(Color.WHITE);
-		g.drawString(""+b.p1score, 15, 20);
-		g.drawString(""+b.p2score, 385, 20);
+		g.drawString(""+b.p1score+":"+b.p2score, 840, 400);
+		//g.drawString(""+b.p2score, 18, 50);
 		
 		repaint();
 	}
