@@ -21,18 +21,19 @@ public class Pong extends JFrame {
 	//ball object
 	static Ball b = new Ball(250, 200);
 
-	String NamePLayer1;
-	String NamePLayer2;
+	//String NamePLayer1;
+	//String NamePLayer2;
 	
 	
 	//constructor for window
 	public Pong() {
+		/*
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Name Player 1:");
 		NamePLayer1=scanner.nextLine();
 		System.out.print("Name Player 2:");
 		NamePLayer2=scanner.nextLine();
-
+*/
 
 
 		this.setTitle("Maege's Pong!");
@@ -73,7 +74,7 @@ public class Pong extends JFrame {
 		b.p2.draw(g);
 		g.setFont(stringFont);
 		g.setColor(Color.WHITE);
-		g.drawString(this.NamePLayer1+" "+b.p1score+":"+b.p2score+" "+this.NamePLayer2, this.getWidth()/2+100, 400);
+		g.drawString(b.p1score+":"+b.p2score , this.getWidth()/2-80, this.getHeight()/2);
 		//g.drawString(""+b.p2score, 18, 50);
 		
 		repaint();
