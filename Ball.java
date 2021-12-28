@@ -15,7 +15,7 @@ public class Ball implements Runnable {
 	int p1score, p2score;
 	
 	Paddle p1 = new Paddle(10, 25, 0);
-	Paddle p2 = new Paddle(1900, 25, 1);
+	Paddle p2 = new Paddle(Pong.gWidth-25, 25, 1);
 	
 	Rectangle ball;
 

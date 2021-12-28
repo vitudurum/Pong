@@ -4,14 +4,15 @@ package pongGame;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
 import javax.swing.*;
 
 
 public class Pong extends JFrame {
 	
 	//screen size variables.
-	int gWidth = 1920;
-	int gHeight = 1080;
+	static int gWidth = 1920;
+	static int gHeight = 1080;
 	Dimension screenSize = new Dimension(gWidth, gHeight);
 	
 	Image dbImage;
@@ -19,10 +20,22 @@ public class Pong extends JFrame {
 	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
 	//ball object
 	static Ball b = new Ball(250, 200);
+
+	//String NamePLayer1;
+	//String NamePLayer2;
 	
 	
 	//constructor for window
 	public Pong() {
+		/*
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Name Player 1:");
+		NamePLayer1=scanner.nextLine();
+		System.out.print("Name Player 2:");
+		NamePLayer2=scanner.nextLine();
+*/
+
+
 		this.setTitle("Maege's Pong!");
 		this.setSize(screenSize);
 		this.setResizable(false);
@@ -33,6 +46,8 @@ public class Pong extends JFrame {
 	}
 	
 	public static void main(String[] args) {
+
+
 		Pong pg = new Pong();
 		
 		//create and start threads.
@@ -59,7 +74,7 @@ public class Pong extends JFrame {
 		b.p2.draw(g);
 		g.setFont(stringFont);
 		g.setColor(Color.WHITE);
-		g.drawString(""+b.p1score+":"+b.p2score, 840, 400);
+		g.drawString(b.p1score+":"+b.p2score , this.getWidth()/2-80, this.getHeight()/2);
 		//g.drawString(""+b.p2score, 18, 50);
 		
 		repaint();
