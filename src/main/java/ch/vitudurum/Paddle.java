@@ -1,4 +1,4 @@
-package pongGame;
+package ch.vitudurum;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;

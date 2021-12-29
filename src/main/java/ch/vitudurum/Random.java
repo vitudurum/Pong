@@ -1,4 +1,4 @@
-package pongGame;
+package ch.vitudurum;
 
 public class Random {
 }
