@@ -66,21 +66,21 @@ public class Ball implements Runnable {
 		ball.y += yDirection;
 		//bounce the ball when it hits the edge of the screen
 		if (ball.x <= 0) {
-			setXDirection(+2);
+			setXDirection(+1);
 			p2score++;
 			
 	}
 		if (ball.x >= 1920) {
-			setXDirection(-2);
+			setXDirection(-1);
 			p1score++;
 		}
 		
 		if (ball.y <= 15) {
-			setYDirection(+2);
+			setYDirection(+1);
 		}
 		
 		if (ball.y >= 1060) {
-			setYDirection(-2);
+			setYDirection(-1);
 		}
 	}
 		@Override
