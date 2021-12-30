@@ -25,6 +25,7 @@ public class ADCReader
         int raw_adc = data[0];
 
         // Output data to screen
-        System.out.printf("Digital value of analog input : %d %n", raw_adc);
+       // System.out.printf("Digital value of analog input : %d %n", raw_adc);
+        System.out.println("Digital value of analog input : %d %n"+ raw_adc);
     }
 }
