@@ -25,8 +25,12 @@ public class ADCReader {
                 throw new IllegalStateException(
                         "Failed to read configuration from address 0x" + String.format("%02x", TCA9534_REG_ADDR_CFG));
 
+            System.out.println("IC2 Ready");
+            System.out.println("Try reading");
             byte currentState = (byte) tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT);
-
+            System.out.println("Value:"+currentState);
+            System.out.println("Finishing");
+/*
             if (config != 0x00) {
                 System.out.println("TCA9534 is not configured as OUTPUT, setting register 0x" + String
                         .format("%02x", TCA9534_REG_ADDR_CFG) + " to 0x00");
@@ -45,6 +49,8 @@ public class ADCReader {
             Thread.sleep(500L);
             currentState = setPin(currentState, 7, tca9534Dev, false);
             Thread.sleep(500L);
+
+*/
         }
     }
 
