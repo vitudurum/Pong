@@ -11,13 +11,13 @@ public class ADCReader {
 
     private static final byte TCA9534_REG_ADDR_OUT_PORT = 0x01;
     //private static final byte TCA9534_REG_ADDR_CFG = 0x03;
-    private static final byte TCA9534_REG_ADDR_CFG = 0x48;
+    private static final byte TCA9534_REG_ADDR_CFG = 0x4B;
 
     public static void main(String[] args) throws Exception {
 
         Context pi4j = Pi4J.newAutoContext();
         I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
-        I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x48).build();
+        I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
         try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
 
             int config = tca9534Dev.readRegister(TCA9534_REG_ADDR_CFG);
