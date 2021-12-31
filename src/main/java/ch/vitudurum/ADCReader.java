@@ -9,7 +9,8 @@ import com.pi4j.io.i2c.I2CProvider;
 
 public class ADCReader {
 
-    private static final byte TCA9534_REG_ADDR_OUT_PORT = (byte) 0x84;
+    private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
+    private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
     //private static final byte TCA9534_REG_ADDR_CFG = 0x03;
     private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
 
@@ -30,9 +31,11 @@ public class ADCReader {
             //tca9534Dev.writeRegister(TCA9534_REG_ADDR_CFG, (byte) 0x84);
             System.out.println("Try reading");
             //byte currentState = (byte) tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT);
-            int zahl=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT);
+            int zahl1=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
+            int zahl2=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
             //int zahl1=tca9534Dev.readRegisterWord(TCA9534_REG_ADDR_OUT_PORT);
-            System.out.println("Value:"+zahl);
+            System.out.println("Value-1:"+zahl1);
+            System.out.println("Value-2:"+zahl2);
             //System.out.println("Value:"+zahl1);
             System.out.println("Finishing");
 /*
@@ -67,7 +70,7 @@ public class ADCReader {
             newState = (byte) (currentState & ~(1 << pin));
 
         System.out.println("Setting TCA9534 to new state " + asBinary(newState));
-        tca9534Dev.writeRegister(TCA9534_REG_ADDR_OUT_PORT, newState);
+        tca9534Dev.writeRegister(TCA9534_REG_ADDR_OUT_PORT1, newState);
         return newState;
     }
 
