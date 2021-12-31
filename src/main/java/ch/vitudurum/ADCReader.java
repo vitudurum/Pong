@@ -9,9 +9,9 @@ import com.pi4j.io.i2c.I2CProvider;
 
 public class ADCReader {
 
-    private static final byte TCA9534_REG_ADDR_OUT_PORT = 0x01;
+    private static final byte TCA9534_REG_ADDR_OUT_PORT = (byte) 0x84;
     //private static final byte TCA9534_REG_ADDR_CFG = 0x03;
-    private static final byte TCA9534_REG_ADDR_CFG = 0x4B;
+    private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
 
     public static void main(String[] args) throws Exception {
 
@@ -26,8 +26,8 @@ public class ADCReader {
                         "Failed to read configuration from address 0x" + String.format("%02x", TCA9534_REG_ADDR_CFG));
 
             System.out.println("IC2 Ready");
-            System.out.println("IC2 Write");
-            tca9534Dev.writeRegister(TCA9534_REG_ADDR_CFG, (byte) 0x84);
+            //System.out.println("IC2 Write");
+            //tca9534Dev.writeRegister(TCA9534_REG_ADDR_CFG, (byte) 0x84);
             System.out.println("Try reading");
             //byte currentState = (byte) tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT);
             int zahl=tca9534Dev.readRegisterByte(TCA9534_REG_ADDR_OUT_PORT);
