@@ -30,7 +30,7 @@ public class ADCReader {
             //tca9534Dev.writeRegister(TCA9534_REG_ADDR_CFG, (byte) 0x84);
             System.out.println("Try reading");
             //byte currentState = (byte) tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT);
-            int zahl=tca9534Dev.readRegisterByte(TCA9534_REG_ADDR_OUT_PORT);
+            int zahl=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT);
             //int zahl1=tca9534Dev.readRegisterWord(TCA9534_REG_ADDR_OUT_PORT);
             System.out.println("Value:"+zahl);
             //System.out.println("Value:"+zahl1);
