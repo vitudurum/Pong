@@ -62,8 +62,7 @@ public class Paddle implements Runnable{
 	
 	public void move() {
 
-	 	//paddle.y = paddle.y+yDirection;
-		paddle.y=Pong.adc.getPosition(1);
+	 	paddle.y = paddle.y+yDirection;
 
 		if (paddle.y <= 15)
 	 		paddle.y = 15;
