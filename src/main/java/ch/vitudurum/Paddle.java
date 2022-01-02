@@ -17,8 +17,7 @@ public class Paddle implements Runnable{
 		this.id = id;
 		paddle = new Rectangle(x, y, 10, 100);
 		}
-
-
+		
 	public void keyPressed(KeyEvent e) {
 			if (id==0) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
@@ -63,7 +62,8 @@ public class Paddle implements Runnable{
 	
 	public void move() {
 
-	 	paddle.y = paddle.y+yDirection;
+	 	//paddle.y = paddle.y+yDirection;
+		paddle.y=Pong.adc.getPosition(1);
 
 		if (paddle.y <= 15)
 	 		paddle.y = 15;

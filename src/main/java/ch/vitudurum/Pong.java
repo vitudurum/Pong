@@ -19,11 +19,11 @@ public class Pong extends JFrame {
 	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
 	//ball object
 	static Ball b = new Ball(250, 200);
+	static ADCReader adc = new ADCReader();
 
 	//String NamePLayer1;
 	//String NamePLayer2;
-
-
+	
 	
 	//constructor for window
 	public Pong() {
