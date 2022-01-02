@@ -120,7 +120,7 @@ public class ADCReader {
     public int getPosition(int player)
     {
         int zahl=250;
-        if (player == 1) return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
+        if (player == 1) return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1)*4;
         return zahl;
     }
 }
