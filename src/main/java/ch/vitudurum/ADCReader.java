@@ -18,7 +18,6 @@ public class ADCReader {
     I2CProvider i2CProvider;
     Context pi4j;
 
-
     public ADCReader() {
         pi4j = Pi4J.newAutoContext();
         i2CProvider = pi4j.provider("linuxfs-i2c");
