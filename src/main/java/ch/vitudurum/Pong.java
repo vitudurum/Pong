@@ -22,7 +22,8 @@ public class Pong extends JFrame {
 
 	//String NamePLayer1;
 	//String NamePLayer2;
-	
+
+
 	
 	//constructor for window
 	public Pong() {

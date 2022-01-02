@@ -17,7 +17,8 @@ public class Paddle implements Runnable{
 		this.id = id;
 		paddle = new Rectangle(x, y, 10, 100);
 		}
-		
+
+
 	public void keyPressed(KeyEvent e) {
 			if (id==0) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
