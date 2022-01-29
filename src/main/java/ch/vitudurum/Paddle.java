@@ -13,9 +13,11 @@ import java.awt.event.KeyEvent;
 
 public class Paddle implements Runnable{
 	
-	int x, y, yDirection, id;
+	int x, y, yDirection;
+	public int id;
 	private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
-	
+	private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
+
 	Rectangle paddle;
 	private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
 	I2C tca9534Dev;
@@ -85,7 +87,11 @@ public class Paddle implements Runnable{
 	public void move() {
 
 	 	//paddle.y = paddle.y+yDirection;
-		paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
+		if (this.id==0)
+			paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
+		if (this.id==1)
+			paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
+
 		paddle.y *= 3.75;
 		System.out.println("Wert Paddle:"+paddle.y);
 		if (paddle.y <= 15)
