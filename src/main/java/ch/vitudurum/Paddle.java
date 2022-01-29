@@ -19,17 +19,18 @@ public class Paddle implements Runnable{
 	Rectangle paddle;
 	private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
 	I2C tca9534Dev;
+	Context pi4j = Pi4J.newAutoContext();
+	I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
+	I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
 
 	public Paddle(int x, int y, int id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 		paddle = new Rectangle(x, y, 10, 100);
-		Context pi4j = Pi4J.newAutoContext();
-		I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
-		I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
-		try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
 
+		try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
+			this.tca9534Dev=tca9534Dev;
 			int config = tca9534Dev.readRegister(TCA9534_REG_ADDR_CFG);
 			if (config < 0)
 				throw new IllegalStateException(
