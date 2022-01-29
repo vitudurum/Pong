@@ -95,7 +95,7 @@ public class Paddle implements Runnable{
 		System.out.println("Wert Paddle 1:"+tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2));
 
 		paddle.y *= 3.75;
-		System.out.println("Wert Paddle:"+paddle.y);
+		//System.out.println("Wert Paddle:"+paddle.y);
 		if (paddle.y <= 15)
 	 		paddle.y = 15;
 
