@@ -123,6 +123,8 @@ public class Ball implements Runnable {
 	public int getADCValue(int id) {
 		if (id == 0)
 			return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
-		return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
+		if (id == 2)
+			return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
+		return -1;
 	}
 }
