@@ -15,31 +15,17 @@ public class Paddle implements Runnable{
 	
 	int x, y, yDirection;
 	public int id;
-	private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
-	private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
-
 	Rectangle paddle;
-	private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
-	I2C tca9534Dev;
-	Context pi4j = Pi4J.newAutoContext();
-	I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
-	I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
+	Ball b;
 
-	public Paddle(int x, int y, int id) {
+
+	public Paddle(Ball b,int x, int y,int id) {
+		this.b=b;
 		this.x = x;
 		this.y = y;
 		this.id = id;
 		paddle = new Rectangle(x, y, 10, 100);
 
-		try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
-			this.tca9534Dev=tca9534Dev;
-			int config = tca9534Dev.readRegister(TCA9534_REG_ADDR_CFG);
-			if (config < 0)
-				throw new IllegalStateException(
-						"Failed to read configuration from address 0x" + String.format("%02x", TCA9534_REG_ADDR_CFG));
-
-			System.out.println("IC2 Ready");
-		}
 	}
 		
 	public void keyPressed(KeyEvent e) {
@@ -91,8 +77,8 @@ public class Paddle implements Runnable{
 		//	paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
 		//if (this.id==1)
 		//	paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
-		System.out.println("Wert Paddle 0:"+tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1));
-		System.out.println("Wert Paddle 1:"+tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2));
+		System.out.println("Wert Paddle 0:"+b.getADCValue(0));
+		System.out.println("Wert Paddle 1:"+b.getADCValue(1));
 
 		paddle.y *= 3.75;
 		//System.out.println("Wert Paddle:"+paddle.y);
