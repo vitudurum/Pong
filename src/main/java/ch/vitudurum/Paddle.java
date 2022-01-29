@@ -73,10 +73,10 @@ public class Paddle implements Runnable{
 	public void move() {
 
 	 	//paddle.y = paddle.y+yDirection;
-		//if (this.id==0)
-		//	paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
-		//if (this.id==1)
-		//	paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
+		if (this.id==0)
+			paddle.y=b.getADCValue(0);
+		if (this.id==1)
+			paddle.y=b.getADCValue(1);
 		System.out.println("Wert Paddle 0:"+b.getADCValue(0));
 		System.out.println("Wert Paddle 1:"+b.getADCValue(1));
 
