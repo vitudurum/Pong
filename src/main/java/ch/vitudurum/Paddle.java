@@ -74,7 +74,7 @@ public class Paddle implements Runnable{
 
 	 	//paddle.y = paddle.y+yDirection;
 		paddle.y=b.getADCValue(id);
-		System.out.println("Wert Paddle "+this.id+":"+paddle.y);
+		//System.out.println("Wert Paddle "+this.id+":"+paddle.y);
 
 		paddle.y *= 3.75;
 		//System.out.println("Wert Paddle:"+paddle.y);
