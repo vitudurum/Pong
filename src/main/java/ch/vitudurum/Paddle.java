@@ -1,4 +1,10 @@
 package ch.vitudurum;
+import com.pi4j.Pi4J;
+import com.pi4j.context.Context;
+import com.pi4j.io.i2c.I2C;
+import com.pi4j.io.i2c.I2CConfig;
+import com.pi4j.io.i2c.I2CProvider;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -8,15 +14,30 @@ import java.awt.event.KeyEvent;
 public class Paddle implements Runnable{
 	
 	int x, y, yDirection, id;
+	private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
 	
 	Rectangle paddle;
-	
-	public Paddle(int x, int y, int id){
+	private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
+	I2C tca9534Dev;
+
+	public Paddle(int x, int y, int id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 		paddle = new Rectangle(x, y, 10, 100);
+		Context pi4j = Pi4J.newAutoContext();
+		I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
+		I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
+		try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
+
+			int config = tca9534Dev.readRegister(TCA9534_REG_ADDR_CFG);
+			if (config < 0)
+				throw new IllegalStateException(
+						"Failed to read configuration from address 0x" + String.format("%02x", TCA9534_REG_ADDR_CFG));
+
+			System.out.println("IC2 Ready");
 		}
+	}
 		
 	public void keyPressed(KeyEvent e) {
 			if (id==0) {
@@ -62,8 +83,9 @@ public class Paddle implements Runnable{
 	
 	public void move() {
 
-	 	paddle.y = paddle.y+yDirection;
-
+	 	//paddle.y = paddle.y+yDirection;
+		paddle.y=tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
+		System.out.println("Wert Paddle:"+paddle.y);
 		if (paddle.y <= 15)
 	 		paddle.y = 15;
 
