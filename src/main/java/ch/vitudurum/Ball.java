@@ -86,7 +86,7 @@ public class Ball implements Runnable {
 			speed=1.2;
 			setXDirection(+1);
 			p2score++;
-			ball.x=1000;
+			ball.x=100;
 			ball.y=500;
 
 
@@ -95,7 +95,7 @@ public class Ball implements Runnable {
 			speed=1.2;
 			setXDirection(-1);
 			p1score++;
-			ball.x=1000;
+			ball.x=1800;
 			ball.y=500;
 
 		}

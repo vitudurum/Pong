@@ -78,8 +78,8 @@ public class Paddle implements Runnable{
 		//System.out.println("State ADC:"+adc.isADCUp());
 		if (adc.isADCUp())
 		{
-			paddle.y=adc.getADCValue(id);
-			paddle.y *= 3.75;
+		//	paddle.y=adc.getADCValue(id);
+		//	paddle.y *= 3.75;
 		}
 		//System.out.println("Wert Paddle "+this.id+":"+paddle.y);
 
