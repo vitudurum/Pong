@@ -16,20 +16,12 @@ public class Ball implements Runnable {
 
 	//global variables
 	int x, y, xDirection, yDirection;
-	private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
-	private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
-
-	private static final byte TCA9534_REG_ADDR_CFG = (byte)0x4B;
-	I2C tca9534Dev;
-	Context pi4j = Pi4J.newAutoContext();
-	I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
-	I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
 
 
 	int p1score, p2score;
 	
-	Paddle p1 = new Paddle(this,10, 25, 0);
-	Paddle p2 = new Paddle(this,Pong.gWidth-25, 25, 1);
+	Paddle p1 = new Paddle(10, 25, 0);
+	Paddle p2 = new Paddle(Pong.gWidth-25, 25, 1);
 	
 	Rectangle ball;
 
@@ -39,16 +31,7 @@ public class Ball implements Runnable {
 		this.x = x;
 		this.y = y;
 
-		// Connect ADC
-		try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
-			this.tca9534Dev=tca9534Dev;
-			int config = tca9534Dev.readRegister(TCA9534_REG_ADDR_CFG);
-			if (config < 0)
-				throw new IllegalStateException(
-						"Failed to read configuration from address 0x" + String.format("%02x", TCA9534_REG_ADDR_CFG));
 
-			System.out.println("IC2 Ready");
-		}
 
 
 
@@ -97,7 +80,7 @@ public class Ball implements Runnable {
 			p2score++;
 			
 	}
-		if (ball.x >= 1920) {
+		if (ball.x >= Pong.gWidth-20) {
 			setXDirection(-1);
 			p1score++;
 		}
@@ -106,7 +89,7 @@ public class Ball implements Runnable {
 			setYDirection(+1);
 		}
 		
-		if (ball.y >= 1060) {
+		if (ball.y >= Pong.gHeight-20) {
 			setYDirection(-1);
 		}
 	}
@@ -120,11 +103,5 @@ public class Ball implements Runnable {
 		}catch(Exception e) { System.err.println(e.getMessage()); }
 
 	}
-	public int getADCValue(int id) {
-		if (id == 0)
-			return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
-		if (id == 1)
-			return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT2);
-		return -1;
-	}
+
 }

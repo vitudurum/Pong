@@ -13,13 +13,14 @@ public class Pong extends JFrame {
 	static int gWidth = 1920;
 	static int gHeight = 1080;
 	Dimension screenSize = new Dimension(gWidth, gHeight);
+	final static ADCReader adc = new ADCReader();
 	
 	Image dbImage;
 	Graphics dbGraphics;
 	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
 	//ball object
 	static Ball b = new Ball(250, 200);
-
+	Rectangle border;
 	//String NamePLayer1;
 	//String NamePLayer2;
 	
@@ -34,7 +35,7 @@ public class Pong extends JFrame {
 		NamePLayer2=scanner.nextLine();
 */
 
-
+		border = new Rectangle(0,0, 100, 100);
 		this.setTitle("Maege's Pong!");
 		this.setSize(screenSize);
 		this.setResizable(false);
@@ -74,9 +75,18 @@ public class Pong extends JFrame {
 		g.setFont(stringFont);
 		g.setColor(Color.WHITE);
 		g.drawString(b.p1score+":"+b.p2score , this.getWidth()/2-80, this.getHeight()/2);
+
+
+		g.drawRect(10,10,getWidth()-20,getHeight()-20);
 		//g.drawString(""+b.p2score, 18, 50);
-		
+
+		//int oldStroke=g.gets
+		//g.setColor(Color.red);
+	    //g.drawRect(0,0,getWidth(),getHeight());
+
+
 		repaint();
+
 	}
 	
 	public class AL extends KeyAdapter {

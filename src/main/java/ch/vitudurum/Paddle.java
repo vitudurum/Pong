@@ -16,15 +16,13 @@ public class Paddle implements Runnable{
 	int x, y, yDirection;
 	public int id;
 	Rectangle paddle;
-	Ball b;
 
 
-	public Paddle(Ball b,int x, int y,int id) {
-		this.b=b;
+	public Paddle(int x, int y,int id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		paddle = new Rectangle(x, y, 10, 100);
+		paddle = new Rectangle(x, y, 15, 100);
 
 	}
 		
@@ -72,11 +70,17 @@ public class Paddle implements Runnable{
 	
 	public void move() {
 
-	 	//paddle.y = paddle.y+yDirection;
-		paddle.y=b.getADCValue(id);
+		//Keyboard
+	 	paddle.y = paddle.y+yDirection;
+
+		 //ADC
+		if (Pong.adc.isADCUp())
+		{
+			paddle.y=Pong.adc.getADCValue1(id);
+			paddle.y *= 3.75;
+		}
 		//System.out.println("Wert Paddle "+this.id+":"+paddle.y);
 
-		paddle.y *= 3.75;
 		//System.out.println("Wert Paddle:"+paddle.y);
 		if (paddle.y <= 15)
 	 		paddle.y = 15;
