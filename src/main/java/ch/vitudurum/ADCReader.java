@@ -21,7 +21,7 @@ public class ADCReader {
         I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
         I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
         try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
-
+            this.tca9534Dev=tca9534Dev;
             int config = tca9534Dev.readRegister(TCA9534_REG_ADDR_CFG);
             if (config < 0)
                 throw new IllegalStateException(
@@ -36,7 +36,7 @@ public class ADCReader {
         }
     }
 
-    public int getADCValue1(int id) {
+    public int getADCValue(int id) {
         if (id == 0)
             return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
         else

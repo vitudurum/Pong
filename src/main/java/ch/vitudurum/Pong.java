@@ -13,8 +13,7 @@ public class Pong extends JFrame {
 	static int gWidth = 1920;
 	static int gHeight = 1080;
 	Dimension screenSize = new Dimension(gWidth, gHeight);
-	final static ADCReader adc = new ADCReader();
-	
+
 	Image dbImage;
 	Graphics dbGraphics;
 	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );

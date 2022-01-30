@@ -16,6 +16,7 @@ public class Paddle implements Runnable{
 	int x, y, yDirection;
 	public int id;
 	Rectangle paddle;
+	final static ADCReader adc = new ADCReader();
 
 
 	public Paddle(int x, int y,int id) {
@@ -74,9 +75,10 @@ public class Paddle implements Runnable{
 	 	paddle.y = paddle.y+yDirection;
 
 		 //ADC
-		if (Pong.adc.isADCUp())
+		//System.out.println("State ADC:"+adc.isADCUp());
+		if (adc.isADCUp())
 		{
-			paddle.y=Pong.adc.getADCValue1(id);
+			paddle.y=adc.getADCValue(id);
 			paddle.y *= 3.75;
 		}
 		//System.out.println("Wert Paddle "+this.id+":"+paddle.y);
