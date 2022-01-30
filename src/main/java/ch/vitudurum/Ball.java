@@ -15,13 +15,14 @@ import java.util.Random;
 public class Ball implements Runnable {
 
 	//global variables
-	int x, y, xDirection, yDirection;
-
+	int x, y;
+   double  xDirection, yDirection;
 
 	int p1score, p2score;
 	
 	Paddle p1 = new Paddle(10, 25, 0);
 	Paddle p2 = new Paddle(Pong.gWidth-25, 25, 1);
+	double speed = 1.2;
 	
 	Rectangle ball;
 
@@ -51,7 +52,7 @@ public class Ball implements Runnable {
 		ball = new Rectangle(this.x, this.y, 25, 25);
 	}
 	
-	public void setXDirection(int xDir){
+	public void setXDirection(double xDir){
 		xDirection = xDir;
 	}
 	public void setYDirection(int yDir){
@@ -65,10 +66,16 @@ public class Ball implements Runnable {
 
 
 	public void collision(){
-        if(ball.intersects(p1.paddle))
-            setXDirection(+1);
-        if(ball.intersects(p2.paddle))
-            setXDirection(-1);
+        if(ball.intersects(p1.paddle)) {
+			speed=speed*1.2;
+			System.out.println("Speed:"+speed);
+			setXDirection(speed);
+		}
+        if(ball.intersects(p2.paddle)) {
+			speed=speed*1.2;
+			System.out.println("Speed:"+speed);
+			setXDirection(speed*-1);
+		}
 	}	
 	public void move() {
 		collision();
@@ -76,20 +83,28 @@ public class Ball implements Runnable {
 		ball.y += yDirection;
 		//bounce the ball when it hits the edge of the screen
 		if (ball.x <= 0) {
+			speed=1.2;
 			setXDirection(+1);
 			p2score++;
-			
-	}
-		if (ball.x >= Pong.gWidth-20) {
+			ball.x=1000;
+			ball.y=500;
+
+
+		}
+		if (ball.x >= Pong.gWidth) {
+			speed=1.2;
 			setXDirection(-1);
 			p1score++;
+			ball.x=1000;
+			ball.y=500;
+
 		}
 		
 		if (ball.y <= 15) {
 			setYDirection(+1);
 		}
 		
-		if (ball.y >= Pong.gHeight-20) {
+		if (ball.y >= Pong.gHeight) {
 			setYDirection(-1);
 		}
 	}
