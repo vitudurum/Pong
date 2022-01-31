@@ -24,7 +24,7 @@ public class Pong extends JFrame {
 	Graphics dbGraphics;
 	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
 	//ball object
-	static Ball b = new Ball(250, 200);
+	private static Ball b = new Ball(250, 200);
 	Rectangle border;
 	//String NamePLayer1;
 	//String NamePLayer2;
@@ -41,7 +41,7 @@ public class Pong extends JFrame {
 */
 
 		border = new Rectangle(0,0, 100, 100);
-		this.setTitle("Maege's Pong!");
+		this.setTitle("Marc's Pong!");
 		this.setSize(screenSize);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -51,7 +51,6 @@ public class Pong extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-
 
 		Pong pg = new Pong();
 		
@@ -80,16 +79,7 @@ public class Pong extends JFrame {
 		g.setFont(stringFont);
 		g.setColor(Color.WHITE);
 		g.drawString(b.p1score+":"+b.p2score , this.getWidth()/2-80, this.getHeight()/2);
-
-
 		g.drawRect(8,10,getWidth()-18,getHeight()-20);
-		//g.drawString(""+b.p2score, 18, 50);
-
-		//int oldStroke=g.gets
-		//g.setColor(Color.red);
-	    //g.drawRect(0,0,getWidth(),getHeight());
-
-
 		repaint();
 
 	}
@@ -106,5 +96,9 @@ public class Pong extends JFrame {
 			b.p2.keyReleased(e);
 		}
 		
+	}
+	public Ball getBall()
+	{
+		return b;
 	}
 }

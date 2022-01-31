@@ -16,7 +16,6 @@ public class Paddle implements Runnable{
 	int x, y, yDirection;
 	public int id;
 	Rectangle paddle;
-	final static ADCReader adc = new ADCReader();
 
 
 	public Paddle(int x, int y,int id) {
@@ -68,20 +67,15 @@ public class Paddle implements Runnable{
 	public void setYDirection(int yDir) {
 		yDirection = yDir;
 	}
-	
+	public void setPaddleValue(double val)
+	{
+		System.out.println("ID:"+id+":"+val);
+		paddle.y= (int) val;
+	}
 	public void move() {
 
 		//Keyboard
 	 	paddle.y = paddle.y+yDirection;
-
-		 //ADC
-		//System.out.println("State ADC:"+adc.isADCUp());
-		if (adc.isADCUp())
-		{
-		//	paddle.y=adc.getADCValue(id);
-		//	paddle.y *= 3.75;
-		}
-		//System.out.println("Wert Paddle "+this.id+":"+paddle.y);
 
 		//System.out.println("Wert Paddle:"+paddle.y);
 		if (paddle.y <= Pong.border_Up)

@@ -7,7 +7,7 @@ import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
 
-public class ADCReader {
+public class ADCReader implements Runnable{
 
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
     private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
@@ -15,8 +15,10 @@ public class ADCReader {
     private static final byte TCA9534_REG_ADDR_CFG = (byte) 0x4B;
     I2C tca9534Dev;
     boolean up=false;
+    Pong pong;
 
-    public ADCReader() {
+    public ADCReader(Pong pong) {
+        this.pong=pong;
         Context pi4j = Pi4J.newAutoContext();
         I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
         I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
@@ -123,5 +125,33 @@ public class ADCReader {
         sb.append(((b >>> 0) & 1));
 
         return sb.toString();
+    }
+
+    @Override
+    public void run() {
+        int z1=0;
+        int temp=0;
+        int z2=0;
+         try {
+            while (true) {
+                //move();
+                temp=getADCValue(0);
+                if (temp!=z1)
+                {
+                    pong.getBall().getPaddle1().setPaddleValue(temp);
+                    z1=temp;
+                }
+                temp=getADCValue(1);
+                if (temp!=z2)
+                {
+                    pong.getBall().getPaddle1().setPaddleValue(temp);
+                    z2=temp;
+                }
+
+                Thread.sleep(20);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

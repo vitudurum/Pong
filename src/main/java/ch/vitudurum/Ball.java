@@ -18,11 +18,10 @@ public class Ball implements Runnable {
 
     int p1score, p2score;
 
-    Paddle p1 = new Paddle(Pong.border_Left, 25, 0);
-    Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width, 25, 1);
+	public Paddle p1 = new Paddle(Pong.border_Left, 25, 0);
+	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width, 25, 1);
     int initSpeed = 5;
     double incrFactor = 1.1;
-    //double speed = 0;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
 
@@ -127,5 +126,12 @@ public class Ball implements Runnable {
         }
 
     }
-
+	public Paddle getPaddle1()
+	{
+		return p1;
+	}
+	public Paddle getPaddle2()
+	{
+		return p2;
+	}
 }
