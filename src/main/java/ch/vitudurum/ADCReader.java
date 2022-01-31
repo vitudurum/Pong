@@ -16,6 +16,7 @@ public class ADCReader implements Runnable{
     I2C tca9534Dev;
     boolean up=false;
     Pong pong;
+    int ADCResolution=255;
 
     public ADCReader(Pong pong) {
         this.pong=pong;
@@ -139,13 +140,13 @@ public class ADCReader implements Runnable{
                 temp=getADCValue(0);
                 if (temp!=z1)
                 {
-                    pong.getBall().getPaddle1().setPaddleValue(temp);
+                    pong.getBall().getPaddle1().setPaddleValue(temp*Pong.gHeight/ADCResolution);
                     z1=temp;
                 }
                 temp=getADCValue(1);
                 if (temp!=z2)
                 {
-                    pong.getBall().getPaddle2().setPaddleValue(temp);
+                    pong.getBall().getPaddle2().setPaddleValue(temp*Pong.gHeight/ADCResolution);
                     z2=temp;
                 }
 
