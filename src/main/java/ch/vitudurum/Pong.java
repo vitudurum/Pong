@@ -19,7 +19,7 @@ public class Pong extends JFrame {
     static int paddle_height=80;
 	static int paddle_width=20;
 	Dimension screenSize = new Dimension(gWidth, gHeight);
-
+    ADCReader adc;
 	Image dbImage;
 	Graphics dbGraphics;
 	Font stringFont = new Font( "SansSerif", Font.PLAIN, 180 );
@@ -48,6 +48,8 @@ public class Pong extends JFrame {
 		this.setBackground(Color.DARK_GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addKeyListener(new AL());
+
+		 adc = new ADCReader(this);
 	}
 	
 	public static void main(String[] args) {
