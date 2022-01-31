@@ -76,7 +76,7 @@ public class Pong extends JFrame {
 		g.drawString(b.p1score+":"+b.p2score , this.getWidth()/2-80, this.getHeight()/2);
 
 
-		g.drawRect(10,10,getWidth()-20,getHeight()-20);
+		g.drawRect(8,10,getWidth()-18,getHeight()-20);
 		//g.drawString(""+b.p2score, 18, 50);
 
 		//int oldStroke=g.gets

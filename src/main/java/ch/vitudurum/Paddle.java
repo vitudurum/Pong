@@ -30,18 +30,18 @@ public class Paddle implements Runnable{
 	public void keyPressed(KeyEvent e) {
 			if (id==0) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
-					setYDirection(-5);
+					setYDirection(-10);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_S) {
-					setYDirection(5);
+					setYDirection(10);
 				}
 			}
 			if (id==1) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					setYDirection(-5);
+					setYDirection(-10);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					setYDirection(5);
+					setYDirection(10);
 				}
 			}
 	}
@@ -105,13 +105,14 @@ public class Paddle implements Runnable{
 			g.setColor(Color.pink);
 			g.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
 			}
+
 	}
 	@Override
 	public void run() {
 		try {
 			while(true) {
 				move();
-				Thread.sleep(8);
+				Thread.sleep(20);
 			}
 		} catch(Exception e) { System.err.println(e.getMessage()); }
 	}
