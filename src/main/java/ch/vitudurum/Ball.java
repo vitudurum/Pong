@@ -20,7 +20,7 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left, 25, 0);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width, 25, 1);
-    int initSpeed = 1;
+    int initSpeed = 2;
     double incrFactor = 1.1;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
