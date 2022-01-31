@@ -18,8 +18,8 @@ public class Ball implements Runnable {
 
     int p1score, p2score;
 
-    Paddle p1 = new Paddle(10, 25, 0);
-    Paddle p2 = new Paddle(Pong.gWidth - 25, 25, 1);
+    Paddle p1 = new Paddle(Pong.border_Left, 25, 0);
+    Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width, 25, 1);
     int initSpeed = 5;
     double incrFactor = 1.1;
     //double speed = 0;
@@ -40,7 +40,7 @@ public class Ball implements Runnable {
             rXDir--;
         setXDirection(rXDir);
 
-        int rYDir = r.nextInt(initSpeed);
+        int rYDir = r.nextInt(initSpeed/2);
         if (rYDir == 0)
             rYDir--;
         setYDirection(rYDir);
@@ -93,24 +93,24 @@ public class Ball implements Runnable {
         ball.x += xDirection;
         ball.y += yDirection;
         //bounce the ball when it hits the edge of the screen
-        if (ball.x <= 0) {
+        if (ball.x <= Pong.border_Left) {
             setXDirection(initSpeed);
             p2score++;
             ball.x = 100;
             ball.y = 500;
         }
-        if (ball.x >= Pong.gWidth) {
+        if (ball.x >= Pong.border_Right) {
             setXDirection(initSpeed * -1);
             p1score++;
             ball.x = 1800;
             ball.y = 500;
         }
 
-        if (ball.y <= 25) {
+        if (ball.y <= Pong.border_Up) {
             setYDirection(yDirection*-1);
         }
 
-        if (ball.y >= Pong.gHeight-30) {
+        if (ball.y >= Pong.border_Down) {
             setYDirection(yDirection*-1);
         }
     }

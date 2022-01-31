@@ -23,7 +23,7 @@ public class Paddle implements Runnable{
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		paddle = new Rectangle(x, y, 15, 100);
+		paddle = new Rectangle(x, y, Pong.paddle_width,Pong.paddle_height);
 
 	}
 		
@@ -84,11 +84,11 @@ public class Paddle implements Runnable{
 		//System.out.println("Wert Paddle "+this.id+":"+paddle.y);
 
 		//System.out.println("Wert Paddle:"+paddle.y);
-		if (paddle.y <= 15)
-	 		paddle.y = 15;
+		if (paddle.y <= Pong.border_Up)
+	 		paddle.y = Pong.border_Up;
 
-	 	if (paddle.y > 1030)
-			 paddle.y = 1030;
+	 	if (paddle.y > Pong.border_Down-Pong.paddle_height+Pong.border_Up)
+			 paddle.y = Pong.border_Down-Pong.paddle_height+Pong.border_Up;
 
 		//System.out.println("["+this.id+"]"+yDirection);
 		//System.out.println("["+this.id+"]"+paddle.y);
