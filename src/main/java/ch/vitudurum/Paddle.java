@@ -71,13 +71,13 @@ public class Paddle implements Runnable{
 	{
 		//System.out.println("ID:"+id+":"+val);
 		paddle.y= (int) val;
+
 	}
 	public void move() {
 
 		//Keyboard
 	 	paddle.y = paddle.y+yDirection;
 
-		//System.out.println("Wert Paddle:"+paddle.y);
 		if (paddle.y <= Pong.border_Up)
 	 		paddle.y = Pong.border_Up;
 

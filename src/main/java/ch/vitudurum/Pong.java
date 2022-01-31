@@ -16,7 +16,7 @@ public class Pong extends JFrame {
     static int border_Down = gHeight - 30;
     static int border_Left = 0;
     static int border_Right = gWidth;
-    static int paddle_height = 80;
+    static int paddle_height = 120;
     static int paddle_width = 20;
     Dimension screenSize = new Dimension(gWidth, gHeight);
     static ADCReader adc;

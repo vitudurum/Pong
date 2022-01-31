@@ -18,10 +18,10 @@ public class Ball implements Runnable {
 
     int p1score, p2score;
 
-	public Paddle p1 = new Paddle(Pong.border_Left, 25, 0);
-	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width, 25, 1);
-    int initSpeed = 2;
-    double incrFactor = 1.1;
+	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0);
+	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1);
+    int initSpeed = 1;
+    double incrFactor = 1.05;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
 
@@ -39,7 +39,7 @@ public class Ball implements Runnable {
             rXDir--;
         setXDirection(rXDir);
 
-        int rYDir = r.nextInt(initSpeed/2);
+        int rYDir = r.nextInt(2);
         if (rYDir == 0)
             rYDir--;
         setYDirection(rYDir);
@@ -66,7 +66,7 @@ public class Ball implements Runnable {
 
     public void incSpeed() {
         setXDirection(xDirection * incrFactor);
-        System.out.println("Speed:" + xDirection);
+       // System.out.println("Speed:" + xDirection);
 
 
     }
@@ -78,11 +78,15 @@ public class Ball implements Runnable {
     public void collision() {
         if (ball.intersects(p1.paddle)) {
             setXDirection(xDirection*-1);
+            // damit der Ball mind. aus der Intersection raus kommt..
+            ball.x= (int) (ball.x+xDirection);
             incSpeed();
 
         }
         if (ball.intersects(p2.paddle)) {
             setXDirection(xDirection*-1);
+            getPaddle1().x=getPaddle1().x-Pong.paddle_width;
+            ball.x= (int) (ball.x-xDirection);
             incSpeed();
         }
     }
@@ -101,7 +105,7 @@ public class Ball implements Runnable {
         if (ball.x >= Pong.border_Right) {
             setXDirection(initSpeed * -1);
             p1score++;
-            ball.x = 1800;
+            ball.x = Pong.gWidth-100;
             ball.y = 500;
         }
 
