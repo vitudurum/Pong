@@ -31,6 +31,7 @@ public class ADCReader implements Runnable{
 
             System.out.println("IC2 Ready");
             up=true;
+
         }
         catch (Exception e)
         {
@@ -133,7 +134,7 @@ public class ADCReader implements Runnable{
         int temp=0;
         int z2=0;
          try {
-            while (true) {
+            while (isADCUp()) {
                 //move();
                 temp=getADCValue(0);
                 if (temp!=z1)
