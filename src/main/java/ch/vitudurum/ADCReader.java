@@ -145,7 +145,7 @@ public class ADCReader implements Runnable{
                 temp=getADCValue(1);
                 if (temp!=z2)
                 {
-                    pong.getBall().getPaddle1().setPaddleValue(temp);
+                    pong.getBall().getPaddle2().setPaddleValue(temp);
                     z2=temp;
                 }
 
