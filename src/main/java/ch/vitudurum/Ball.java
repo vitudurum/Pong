@@ -119,7 +119,7 @@ public class Ball implements Runnable {
         try {
             while (true) {
                 move();
-                Thread.sleep(20);
+                Thread.sleep(10);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

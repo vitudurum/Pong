@@ -69,7 +69,7 @@ public class Paddle implements Runnable{
 	}
 	public void setPaddleValue(double val)
 	{
-		System.out.println("ID:"+id+":"+val);
+		//System.out.println("ID:"+id+":"+val);
 		paddle.y= (int) val;
 	}
 	public void move() {
@@ -106,7 +106,7 @@ public class Paddle implements Runnable{
 		try {
 			while(true) {
 				move();
-				Thread.sleep(20);
+				Thread.sleep(10);
 			}
 		} catch(Exception e) { System.err.println(e.getMessage()); }
 	}
