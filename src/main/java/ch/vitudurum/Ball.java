@@ -39,12 +39,10 @@ public class Ball implements Runnable {
         if (rXDir == 0)
             rXDir--;
         setXDirection(rXDir);
-        System.out.println("R X:"+rXDir);
 
         int rYDir = r.nextInt(initSpeed);
         if (rYDir == 0)
             rYDir--;
-        System.out.println("R Y:"+rYDir);
         setYDirection(rYDir);
 
         //create "ball"
