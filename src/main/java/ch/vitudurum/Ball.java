@@ -21,7 +21,7 @@ public class Ball implements Runnable {
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1);
     int initSpeed = 5000000;
-    int incrVal = 400000;
+    int incrVal = 200000;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
     int wait=initSpeed;
@@ -61,8 +61,8 @@ public class Ball implements Runnable {
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
-        g.setFont(stringFont);
-        g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        //g.setFont(stringFont);
+       // g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
     }
 
     public void incSpeed() {
@@ -91,6 +91,11 @@ public class Ball implements Runnable {
             incSpeed();
         }
     }
+    public void resetBall()
+    {
+        ball.x = Pong.gWidth/2;
+        ball.y= Pong.gHeight/2;
+    }
 
     public void move() {
         collision();
@@ -100,14 +105,14 @@ public class Ball implements Runnable {
         if (ball.x <= Pong.border_Left) {
             setXDirection(+1);
             p2score++;
-            ball.y = 500;
             resetSpeed();
+            resetBall();
         }
         if (ball.x >= Pong.border_Right) {
             setXDirection(-1);
             p1score++;
-            ball.y = 500;
             resetSpeed();
+            resetBall();
         }
 
         if (ball.y <= Pong.border_Up) {
