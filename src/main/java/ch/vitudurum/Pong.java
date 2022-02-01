@@ -10,13 +10,13 @@ import javax.swing.*;
 public class Pong extends JFrame {
 
     //screen size variables.
-    static int gWidth = 1920;
+    static int gWidth = 1320;
     static int gHeight = 1080;
     static int border_Up = 28;
     static int border_Down = gHeight - 30;
     static int border_Left = 0;
     static int border_Right = gWidth;
-    static int paddle_height = 120;
+    static int paddle_height = 200;
     static int paddle_width = 20;
     Dimension screenSize = new Dimension(gWidth, gHeight);
     static ADCReader adc;
