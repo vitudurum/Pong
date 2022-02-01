@@ -22,7 +22,7 @@ public class Pong extends JFrame {
     static ADCReader adc;
     Image dbImage;
     Graphics dbGraphics;
-    Font stringFont = new Font("SansSerif", Font.PLAIN, 100);
+    Font stringFont = new Font("SansSerif", Font.PLAIN, 180);
     //ball object
     private static Ball b = new Ball(250, 200);
     Rectangle border;
@@ -81,7 +81,7 @@ public class Pong extends JFrame {
         b.p2.draw(g);
         g.setFont(stringFont);
         g.setColor(Color.WHITE);
-        g.drawString(b.p1score + ":" + b.p2score, this.getWidth() / 2 - 80, 120);
+        g.drawString(b.p1score + ":" + b.p2score, this.getWidth() / 2 - 80, this.getHeight() / 2);
         g.drawRect(8, 10, getWidth() - 18, getHeight() - 20);
         repaint();
 
