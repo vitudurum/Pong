@@ -20,10 +20,11 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1);
-    int initSpeed = 1;
-    double incrFactor = 1.05;
+    int initSpeed = 5000000;
+    int incrVal = 400000;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
+    int wait=initSpeed;
 
 
     public Ball(int x, int y) {
@@ -34,12 +35,12 @@ public class Ball implements Runnable {
 
         //Set ball moving randomly
         Random r = new Random();
-        int rXDir = r.nextInt(initSpeed);
+        int rXDir = r.nextInt(1);
         if (rXDir == 0)
             rXDir--;
         setXDirection(rXDir);
 
-        int rYDir = r.nextInt(2);
+        int rYDir = r.nextInt(1);
         if (rYDir == 0)
             rYDir--;
         setYDirection(rYDir);
@@ -65,28 +66,28 @@ public class Ball implements Runnable {
     }
 
     public void incSpeed() {
-        setXDirection(xDirection * incrFactor);
-       // System.out.println("Speed:" + xDirection);
-
+        wait = wait - incrVal;
+        if (wait < 0) {
+            wait = 0;
+        }
+    }
+        public void resetSpeed() {
+            wait=initSpeed;
 
     }
 
     public double getSpeed() {
-        return xDirection;
+        return wait;
     }
 
     public void collision() {
         if (ball.intersects(p1.paddle)) {
-            setXDirection(xDirection*-1);
-            // damit der Ball mind. aus der Intersection raus kommt..
-            ball.x= (int) (ball.x+xDirection);
+            setXDirection(+1);
             incSpeed();
 
         }
         if (ball.intersects(p2.paddle)) {
-            setXDirection(xDirection*-1);
-            getPaddle1().x=getPaddle1().x-Pong.paddle_width;
-            ball.x= (int) (ball.x-xDirection);
+            setXDirection(-1);
             incSpeed();
         }
     }
@@ -97,24 +98,24 @@ public class Ball implements Runnable {
         ball.y += yDirection;
         //bounce the ball when it hits the edge of the screen
         if (ball.x <= Pong.border_Left) {
-            setXDirection(initSpeed);
+            setXDirection(+1);
             p2score++;
-            ball.x = 100;
             ball.y = 500;
+            resetSpeed();
         }
         if (ball.x >= Pong.border_Right) {
-            setXDirection(initSpeed * -1);
+            setXDirection(-1);
             p1score++;
-            ball.x = Pong.gWidth-100;
             ball.y = 500;
+            resetSpeed();
         }
 
         if (ball.y <= Pong.border_Up) {
-            setYDirection(yDirection*-1);
+            setYDirection(+1);
         }
 
         if (ball.y >= Pong.border_Down) {
-            setYDirection(yDirection*-1);
+            setYDirection(-1);
         }
     }
 
@@ -123,7 +124,13 @@ public class Ball implements Runnable {
         try {
             while (true) {
                 move();
-                Thread.sleep(5);
+                //Thread.sleep((long) wait,999999);
+                //final long INTERVAL = 10000000;
+                long start = System.nanoTime();
+                long end=0;
+                do{
+                    end = System.nanoTime();
+                }while(start + wait >= end);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
