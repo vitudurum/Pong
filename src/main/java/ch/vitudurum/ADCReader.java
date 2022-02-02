@@ -88,7 +88,7 @@ public class ADCReader implements Runnable{
                 .build();
 
         // get a Digital Input I/O provider from the Pi4J context
-        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-spi");
+        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
 
         var input = digitalInputProvider.create(config);
 
