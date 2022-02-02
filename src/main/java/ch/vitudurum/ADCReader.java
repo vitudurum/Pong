@@ -10,9 +10,6 @@ import com.pi4j.io.i2c.I2CProvider;
 import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.gpio.digital.DigitalState;
-import com.pi4j.Pi4J;
-import com.pi4j.io.gpio.digital.DigitalInput;
-import com.pi4j.io.gpio.digital.DigitalStateChangeListener;
 import com.pi4j.util.Console;
 
 
@@ -88,7 +85,7 @@ public class ADCReader implements Runnable{
                 .build();
 
         // get a Digital Input I/O provider from the Pi4J context
-        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-i2c");
+        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
 
         var input = digitalInputProvider.create(config);
 
