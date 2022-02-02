@@ -105,7 +105,7 @@ public class Ball implements Runnable {
         System.out.println("-->Reset Ball");
 
         ball.x = Pong.gWidth/2;
-        ball.y= Pong.gHeight/2;
+        ballPosY=  Pong.gHeight/2;
 
         r = new Random();
         int rXDir = r.nextInt(2);
@@ -115,11 +115,9 @@ public class Ball implements Runnable {
 
 
         double rYDir = r.nextDouble();
-        //double rYDir = 0.1;
-
-       // rYDir=rYDir-0.5;
-        //System.out.println(rYDir);
+        rYDir=rYDir-0.5;
         setYDirection(rYDir);
+
     }
 
     public void move() {
