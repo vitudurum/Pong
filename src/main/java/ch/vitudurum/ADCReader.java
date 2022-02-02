@@ -20,7 +20,7 @@ import java.util.Properties;
 
 public class ADCReader implements Runnable{
     private static int pressCount = 0;
-    public static final int DIGITAL_INPUT_PIN = 4;
+    public static final int DIGITAL_INPUT_PIN =24;
 
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
     private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
@@ -54,7 +54,68 @@ public class ADCReader implements Runnable{
         }
         if (up) initGPIO();
     }
-    public void initGPIO()
+    public void  initGPIO()
+    {
+        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "INFO");
+
+        // TODO :: REMOVE TEMPORARY PROPERTIES WHEN NATIVE PIGPIO LIB IS READY
+        // this temporary property is used to tell
+        // PIGPIO which remote Raspberry Pi to connect to
+        System.setProperty("pi4j.host", "rpi3bp.savage.lan");
+
+        // create Pi4J console wrapper/helper
+        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
+        final var console = new Console();
+
+        // print program title/header
+        console.title("<-- The Pi4J Project -->", "Basic Digital Input Example");
+
+        // allow for user to exit program using CTRL-C
+        console.promptForExit();
+
+        // Initialize Pi4J with an auto context
+        // An auto context includes AUTO-DETECT BINDINGS enabled
+        // which will load all detected Pi4J extension libraries
+        // (Platforms and Providers) in the class path
+        var pi4j = Pi4J.newAutoContext();
+
+        // create a digital input instance using the default digital input provider
+        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
+        var config = DigitalInput.newConfigBuilder(pi4j)
+                //.id("my-digital-input")
+                .address(DIGITAL_INPUT_PIN)
+                .pull(PullResistance.PULL_DOWN)
+                .build();
+
+        // get a Digital Input I/O provider from the Pi4J context
+        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
+
+        var input = digitalInputProvider.create(config);
+
+        // setup a digital output listener to listen for any state changes on the digital input
+        input.addListener(event -> {
+            Integer count = (Integer) event.source().metadata().get("count").value();
+            console.println(event + " === " + count);
+        });
+
+        // lets read the analog output state
+        console.print("THE STARTING DIGITAL INPUT STATE IS [");
+        console.println(input.state() + "]");
+
+        console.println("CHANGE INPUT STATES VIA I/O HARDWARE AND CHANGE EVENTS WILL BE PRINTED BELOW:");
+
+        // wait (block) for user to exit program using CTRL-C
+        try {
+            console.waitForExit();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // shutdown Pi4J
+        console.println("ATTEMPTING TO SHUTDOWN/TERMINATE THIS PROGRAM");
+        pi4j.shutdown();
+    }
+    public void initGPIO2()
     {
 
         // create Pi4J console wrapper/helper
