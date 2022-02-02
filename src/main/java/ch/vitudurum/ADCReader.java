@@ -10,11 +10,14 @@ import com.pi4j.io.i2c.I2CProvider;
 import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.gpio.digital.DigitalState;
+import com.pi4j.platform.Platforms;
 
 
 import java.util.Properties;
 
 public class ADCReader implements Runnable{
+    private static int pressCount = 0;
+    private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
 
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
     private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
@@ -24,9 +27,7 @@ public class ADCReader implements Runnable{
     boolean up=false;
     Pong pong;
     int ADCResolution=255;
-    private static final int PIN_BUTTON = 24;
 
-    private static int pressCount = 0;
 
     public ADCReader(Pong pong) {
         this.pong=pong;
@@ -54,23 +55,31 @@ public class ADCReader implements Runnable{
     {
         var pi4j = Pi4J.newAutoContext();
 
-        // create a digital input instance using the default digital input provider
-        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
-        var config = DigitalInput.newConfigBuilder(pi4j)
-                //.id("my-digital-input")
-                .address(24)
+        Platforms platforms = pi4j.platforms();
+
+       // console.box("Pi4J PLATFORMS");
+      //  console.println();
+        platforms.describe().print(System.out);
+       // console.println();
+
+
+
+        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
+                .id("button")
+                .name("Press button")
+                .address(PIN_BUTTON)
                 .pull(PullResistance.PULL_DOWN)
-                .build();
+                .debounce(3000L)
+                .provider("pigpio-digital-input");
 
-        // get a Digital Input I/O provider from the Pi4J context
-        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
+        var button = pi4j.create(buttonConfig);
 
-        var input = digitalInputProvider.create(config);
-
-        // setup a digital output listener to listen for any state changes on the digital input
-        input.addListener(event -> {
-            Integer count = (Integer) event.source().metadata().get("count").value();
-            System.out.println(event + " === " + count);
+        button.addListener(e -> {
+            if (e.state() == DigitalState.LOW) {
+                pressCount++;
+                //console.println("Button was pressed for the " + pressCount + "th time");
+                System.out.println("Buttoon ...............");
+            }
         });
     }
     public void initGPIOOld()
