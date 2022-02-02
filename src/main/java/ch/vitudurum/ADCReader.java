@@ -30,11 +30,11 @@ public class ADCReader implements Runnable{
     boolean up=false;
     Pong pong;
     int ADCResolution=255;
-
+    Context pi4j;
 
     public ADCReader(Pong pong) {
         this.pong=pong;
-        Context pi4j = Pi4J.newAutoContext();
+        pi4j = Pi4J.newAutoContext();
         I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
         I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
         try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
@@ -71,7 +71,7 @@ public class ADCReader implements Runnable{
         // An auto context includes AUTO-DETECT BINDINGS enabled
         // which will load all detected Pi4J extension libraries
         // (Platforms and Providers) in the class path
-        var pi4j = Pi4J.newAutoContext();
+        //var pi4j = Pi4J.newAutoContext();
 
         // create a properties map with ".address" and ".shutdown" properties for the digital output configuration
         Properties properties = new Properties();
