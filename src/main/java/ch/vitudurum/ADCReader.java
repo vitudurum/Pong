@@ -65,6 +65,7 @@ public class ADCReader implements Runnable{
         var input = pi4j.din().create(config);
 
         input.addListener(e -> {
+            System.out.println("Button happens");
             if (e.state() == DigitalState.HIGH) {
                 System.out.println("Button is pressed");
             }
