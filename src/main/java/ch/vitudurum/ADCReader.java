@@ -11,6 +11,8 @@ import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.gpio.digital.DigitalState;
 
+import java.util.Properties;
+
 public class ADCReader implements Runnable{
 
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
@@ -49,46 +51,25 @@ public class ADCReader implements Runnable{
     }
     public void initGPIO()
     {
-
-        // Initialize Pi4J with an auto context
-// An auto context includes AUTO-DETECT BINDINGS enabled
-// which will load all detected Pi4J extension libraries
-// (Platforms and Providers) in the class path
         var pi4j = Pi4J.newAutoContext();
+        Properties properties = new Properties();
+        properties.put("id", "my_digital_input");
+        properties.put("address", 24);
+        properties.put("pull", "UP");
+        properties.put("name", "MY-DIGITAL-INPUT");
 
-// create a digital output instance using the default digital output provider
-        var output = pi4j.dout().create(24);
-        output.config().shutdownState(DigitalState.HIGH);
+        var config = DigitalInput.newConfigBuilder(pi4j)
+                .load(properties)
+                .build();
 
-// setup a digital output listener to listen for any state changes on the digital output
-        output.addListener(System.out::println);
+        var input = pi4j.din().create(config);
 
-// lets invoke some changes on the digital output
-        output.state(DigitalState.HIGH)
-                .state(DigitalState.LOW)
-                .state(DigitalState.HIGH)
-                .state(DigitalState.LOW);
+        input.addListener(e -> {
+            if (e.state() == DigitalState.HIGH) {
+                System.out.println("Button is pressed");
+            }
+        });
 
-// lets toggle the digital output state a few times
-        output.toggle()
-                .toggle()
-                .toggle();
-
-// another friendly method of setting output state
-        output.high()
-                .low();
-
-// lets read the digital output state
-        System.out.print("CURRENT DIGITAL OUTPUT [" + output + "] STATE IS [");
-        System.out.println(output.state() + "]");
-
-// pulse to HIGH state for 3 seconds
-        System.out.println("PULSING OUTPUT STATE TO HIGH FOR 3 SECONDS");
-       // output.pulse(3, TimeUnit.SECONDS, DigitalState.HIGH);
-        System.out.println("PULSING OUTPUT STATE COMPLETE");
-
-// shutdown Pi4J
-        pi4j.shutdown();
     }
 
     public int getADCValue(int id) {
