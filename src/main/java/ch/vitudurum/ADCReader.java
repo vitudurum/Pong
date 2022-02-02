@@ -20,7 +20,7 @@ import java.util.Properties;
 
 public class ADCReader implements Runnable{
     private static int pressCount = 0;
-    private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
+    public static final int DIGITAL_INPUT_PIN = 4;
 
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
     private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
@@ -76,7 +76,7 @@ public class ADCReader implements Runnable{
         // create a properties map with ".address" and ".shutdown" properties for the digital output configuration
         Properties properties = new Properties();
         properties.put("id", "my_digital_input");
-        properties.put("address", PIN_BUTTON);
+        properties.put("address", DIGITAL_INPUT_PIN);
         properties.put("pull", "UP");
         properties.put("name", "MY-DIGITAL-INPUT");
 
