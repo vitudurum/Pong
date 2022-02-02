@@ -25,29 +25,36 @@ public class Ball implements Runnable {
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
     int wait=initSpeed;
-
+    Random r;
+    double ballPosY=Pong.gHeight/2;
 
     public Ball(int x, int y) {
         p1score = p2score = 0;
         this.x = x;
         this.y = y;
 
-
+/*
         //Set ball moving randomly
-        Random r = new Random();
+        r = new Random();
         int rXDir = r.nextInt(1);
         if (rXDir == 0)
             rXDir--;
         setXDirection(rXDir);
 
+        double rYDir = r.nextDouble();
+        rYDir=rYDir-0.5;
+        System.out.println(rYDir);
+        setYDirection(rYDir);
+*/
+/*
         int rYDir = r.nextInt(1);
         if (rYDir == 0)
             rYDir--;
         setYDirection(rYDir);
-
+*/
         //create "ball"
         ball = new Rectangle(this.x, this.y, 25, 25);
-
+     resetBall();
     }
 
     public void setXDirection(double xDir) {
@@ -57,7 +64,9 @@ public class Ball implements Runnable {
     public void setYDirection(double yDir) {
         yDirection = yDir;
     }
-
+    public double getYDirection() {
+      return yDirection;
+    }
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
@@ -93,14 +102,31 @@ public class Ball implements Runnable {
     }
     public void resetBall()
     {
+        System.out.println("-->Reset Ball");
+
         ball.x = Pong.gWidth/2;
         ball.y= Pong.gHeight/2;
+
+        r = new Random();
+        int rXDir = r.nextInt(2);
+        if (rXDir == 0)
+            rXDir--;
+        setXDirection(rXDir);
+
+
+        double rYDir = r.nextDouble();
+        //double rYDir = 0.1;
+
+       // rYDir=rYDir-0.5;
+        //System.out.println(rYDir);
+        setYDirection(rYDir);
     }
 
     public void move() {
         collision();
+        ballPosY=ballPosY+yDirection;
         ball.x += xDirection;
-        ball.y += yDirection;
+        ball.y = (int) ballPosY;
         //bounce the ball when it hits the edge of the screen
         if (ball.x <= Pong.border_Left) {
             setXDirection(+1);
@@ -116,11 +142,11 @@ public class Ball implements Runnable {
         }
 
         if (ball.y <= Pong.border_Up) {
-            setYDirection(+1);
+            setYDirection(getYDirection()*-1);
         }
 
         if (ball.y >= Pong.border_Down) {
-            setYDirection(-1);
+            setYDirection(getYDirection()*-1);
         }
     }
 
