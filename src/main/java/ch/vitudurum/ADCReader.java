@@ -52,6 +52,29 @@ public class ADCReader implements Runnable{
     public void initGPIO()
     {
         var pi4j = Pi4J.newAutoContext();
+
+        // create a digital input instance using the default digital input provider
+        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
+        var config = DigitalInput.newConfigBuilder(pi4j)
+                //.id("my-digital-input")
+                .address(24)
+                .pull(PullResistance.PULL_DOWN)
+                .build();
+
+        // get a Digital Input I/O provider from the Pi4J context
+        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
+
+        var input = digitalInputProvider.create(config);
+
+        // setup a digital output listener to listen for any state changes on the digital input
+        input.addListener(event -> {
+            Integer count = (Integer) event.source().metadata().get("count").value();
+            System.out.println(event + " === " + count);
+        });
+    }
+    public void initGPIOOld()
+    {
+        var pi4j = Pi4J.newAutoContext();
         Properties properties = new Properties();
         properties.put("id", "my_digital_input");
         properties.put("address", 24);
