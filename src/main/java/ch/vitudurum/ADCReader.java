@@ -10,7 +10,10 @@ import com.pi4j.io.i2c.I2CProvider;
 import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.gpio.digital.DigitalState;
-import com.pi4j.platform.Platforms;
+import com.pi4j.Pi4J;
+import com.pi4j.io.gpio.digital.DigitalInput;
+import com.pi4j.io.gpio.digital.DigitalStateChangeListener;
+import com.pi4j.util.Console;
 
 
 import java.util.Properties;
@@ -53,34 +56,66 @@ public class ADCReader implements Runnable{
     }
     public void initGPIO()
     {
+
+        // create Pi4J console wrapper/helper
+        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
+        final var console = new Console();
+
+        // print program title/header
+        console.title("<-- The Pi4J Project -->", "Basic Digital Input Example From Properties");
+
+        // allow for user to exit program using CTRL-C
+        console.promptForExit();
+
+        // Initialize Pi4J with an auto context
+        // An auto context includes AUTO-DETECT BINDINGS enabled
+        // which will load all detected Pi4J extension libraries
+        // (Platforms and Providers) in the class path
         var pi4j = Pi4J.newAutoContext();
 
-        Platforms platforms = pi4j.platforms();
+        // create a properties map with ".address" and ".shutdown" properties for the digital output configuration
+        Properties properties = new Properties();
+        properties.put("id", "my_digital_input");
+        properties.put("address", PIN_BUTTON);
+        properties.put("pull", "UP");
+        properties.put("name", "MY-DIGITAL-INPUT");
 
-       // console.box("Pi4J PLATFORMS");
-      //  console.println();
-        platforms.describe().print(System.out);
-       // console.println();
+        // create a digital input instance using the default digital input provider
+        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
+        var config = DigitalInput.newConfigBuilder(pi4j)
+                .load(properties)
+                .build();
 
+        var input = pi4j.din().create(config);
 
+        // setup a digital output listener to listen for any state changes on the digital input
+        input.addListener(console::print);
 
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
-                .name("Press button")
-                .address(PIN_BUTTON)
-                .pull(PullResistance.PULL_DOWN)
-                .debounce(3000L)
-                .provider("pigpio-digital-input");
+        // lets read the digital output state
+        console.print("DIGITAL INPUT [");
+        console.print(input);
+        console.print("] STATE IS [");
+        console.println(input.state() + "]");
 
-        var button = pi4j.create(buttonConfig);
+        console.print("DIGITAL INPUT [");
+        console.print(input);
+        console.print("] PULL RESISTANCE IS [");
+        console.println(input.pull() + "]");
 
-        button.addListener(e -> {
-            if (e.state() == DigitalState.LOW) {
-                pressCount++;
-                //console.println("Button was pressed for the " + pressCount + "th time");
-                System.out.println("Buttoon ...............");
-            }
-        });
+        console.println();
+        console.println("CHANGE INPUT STATES VIA I/O HARDWARE AND CHANGE EVENTS WILL BE PRINTED BELOW:");
+
+        // wait (block) for user to exit program using CTRL-C
+        try {
+            console.waitForExit();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // shutdown Pi4J
+        console.println("ATTEMPTING TO SHUTDOWN/TERMINATE THIS PROGRAM");
+        pi4j.shutdown();
+
     }
     public void initGPIOOld()
     {
