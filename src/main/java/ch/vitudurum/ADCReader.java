@@ -69,7 +69,7 @@ public class ADCReader implements Runnable{
                 System.out.println("Button is pressed");
             }
         });
-
+        System.out.println("Button ready");
     }
 
     public int getADCValue(int id) {
