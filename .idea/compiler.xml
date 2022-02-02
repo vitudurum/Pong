@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="b09670e980ad02737ad6892c98e7e770" />
+        <module name="Pong" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="b09670e980ad02737ad6892c98e7e770" target="11" />
+      <module name="Pong" target="17.0.1" />
     </bytecodeTargetLevel>
   </component>
 </project>
