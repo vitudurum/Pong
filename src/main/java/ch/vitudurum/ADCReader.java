@@ -92,7 +92,8 @@ public class ADCReader implements Runnable{
         // setup a digital output listener to listen for any state changes on the digital input
         input.addListener(event -> {
             Integer count = (Integer) event.source().metadata().get("count").value();
-            console.println(event + " === " + count);
+            //console.println(event + " === " + count);
+            System.out.println("Count:"+count);
         });
 
         // lets read the analog output state
