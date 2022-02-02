@@ -11,10 +11,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.32" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-plugin-linuxfs:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.55" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-library-linuxfs:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-core:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-plugin-pigpio:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-library-pigpio:2.1.1" level="project" />

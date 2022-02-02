@@ -11,6 +11,7 @@ import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.gpio.digital.DigitalState;
 
+
 import java.util.Properties;
 
 public class ADCReader implements Runnable{
