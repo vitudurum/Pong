@@ -21,7 +21,8 @@ public class Ball implements Runnable {
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1);
     int initSpeed = 5000000;
-    int incrVal = 200000;
+    //int incrVal = 300000;
+    double incFact = 0.9;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Rectangle ball;
     int wait=initSpeed;
@@ -75,7 +76,7 @@ public class Ball implements Runnable {
     }
 
     public void incSpeed() {
-        wait = wait - incrVal;
+        wait = (int) (wait * incFact);
         if (wait < 0) {
             wait = 0;
         }
@@ -116,6 +117,7 @@ public class Ball implements Runnable {
 
         double rYDir = r.nextDouble();
         rYDir=rYDir-0.5;
+        rYDir=rYDir*2;
         setYDirection(rYDir);
 
     }
