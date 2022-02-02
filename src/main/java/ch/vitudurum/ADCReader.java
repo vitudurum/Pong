@@ -3,6 +3,7 @@ package ch.vitudurum;
 
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalInputProvider;
 import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
@@ -48,21 +49,33 @@ public class ADCReader implements Runnable{
     }
     public void initGPIO()
     {
+
         var pi4j = Pi4J.newAutoContext();
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
-                .name("Press button")
-                .address(PIN_BUTTON)
+
+        // create a digital input instance using the default digital input provider
+        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
+        var config = DigitalInput.newConfigBuilder(pi4j)
+                //.id("my-digital-input")
+                .address(24)
                 .pull(PullResistance.PULL_DOWN)
-                .debounce(3000L)
-                .provider("pigpio-digital-input");
-        var button = pi4j.create(buttonConfig);
-        button.addListener(e -> {
-            if (e.state() == DigitalState.LOW) {
-                pressCount++;
-                System.out.println("Button was pressed for the " + pressCount + "th time");
-            }
+                .build();
+
+        // get a Digital Input I/O provider from the Pi4J context
+        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
+
+        var input = digitalInputProvider.create(config);
+
+        // setup a digital output listener to listen for any state changes on the digital input
+        input.addListener(event -> {
+            Integer count = (Integer) event.source().metadata().get("count").value();
+            System.out.println(event + " === " + count);
         });
+
+        // lets read the analog output state
+        System.out.print("THE STARTING DIGITAL INPUT STATE IS [");
+        System.out.println(input.state() + "]");
+
+        System.out.println("CHANGE INPUT STATES VIA I/O HARDWARE AND CHANGE EVENTS WILL BE PRINTED BELOW:");
     }
 
     public int getADCValue(int id) {
