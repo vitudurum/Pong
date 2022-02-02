@@ -18,5 +18,6 @@
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-core:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-plugin-pigpio:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.pi4j:pi4j-library-pigpio:2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.pi4j:pi4j-plugin-raspberrypi:2.1.1" level="project" />
   </component>
 </module>
