@@ -1,6 +1,7 @@
-ch\vitudurum\Ball.class
 ch\vitudurum\ADCReader.class
 ch\vitudurum\Pong.class
 ch\vitudurum\Paddle.class
 ch\vitudurum\Random.class
+ch\vitudurum\PrintInfo.class
 ch\vitudurum\Pong$AL.class
+ch\vitudurum\Ball.class

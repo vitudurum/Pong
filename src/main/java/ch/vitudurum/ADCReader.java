@@ -3,6 +3,7 @@ package ch.vitudurum;
 
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
@@ -27,6 +28,10 @@ public class ADCReader implements Runnable{
     Pong pong;
     int ADCResolution=255;
     Context pi4j;
+    private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
+    private static final int PIN_LED = 22; // PIN 15 = BCM 22
+
+
 
     public ADCReader(Pong pong) {
         this.pong=pong;
@@ -50,10 +55,11 @@ public class ADCReader implements Runnable{
         }
         if (up) initGPIO();
     }
-    public void  initGPIO()
-    {
+    public void  initGPIO(){
 
-
+        System.out.println("Initiating GPIO...");
+        // Create Pi4J console wrapper/helper
+        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
         final var console = new Console();
 
         // Print program title/header
@@ -85,7 +91,7 @@ public class ADCReader implements Runnable{
         // method will automatically load all available Pi4J
         // extensions found in the application's classpath which
         // may include 'Platforms' and 'I/O Providers'
-      //  var pi4j = Pi4J.newAutoContext();
+        var pi4j = Pi4J.newAutoContext();
 
         // ------------------------------------------------------------
         // Output Pi4J Context information
@@ -95,25 +101,31 @@ public class ADCReader implements Runnable{
         // approach, we print out the info of these. This can be removed
         // from your own application.
         // OPTIONAL
-       // PrintInfo.printLoadedPlatforms(console, pi4j);
-        //PrintInfo.printDefaultPlatform(console, pi4j);
-        //PrintInfo.printProviders(console, pi4j);
+        PrintInfo.printLoadedPlatforms(console, pi4j);
+        PrintInfo.printDefaultPlatform(console, pi4j);
+        PrintInfo.printProviders(console, pi4j);
 
         // Here we will create I/O interfaces for a (GPIO) digital output
         // and input pin. We define the 'provider' to use PiGpio to control
         // the GPIO.
-
+        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
+                .id("led")
+                .name("LED Flasher")
+                .address(PIN_LED)
+                .shutdown(DigitalState.LOW)
+                .initial(DigitalState.LOW)
+                .provider("pigpio-digital-output");
+        var led = pi4j.create(ledConfig);
 
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("Press button")
-                .address(DIGITAL_INPUT_PIN)
+                .address(PIN_BUTTON)
                 .pull(PullResistance.PULL_DOWN)
                 .debounce(3000L)
                 .provider("pigpio-digital-input");
         var button = pi4j.create(buttonConfig);
         button.addListener(e -> {
-            System.out.println("Action...");
             if (e.state() == DigitalState.LOW) {
                 pressCount++;
                 console.println("Button was pressed for the " + pressCount + "th time");
@@ -121,9 +133,22 @@ public class ADCReader implements Runnable{
         });
 
         // OPTIONAL: print the registry
-       // PrintInfo.printRegistry(console, pi4j);
+        PrintInfo.printRegistry(console, pi4j);
 
-
+        while (pressCount < 5) {
+            if (led.equals(DigitalState.HIGH)) {
+                console.println("LED low");
+                led.low();
+            } else {
+                console.println("LED high");
+                led.high();
+            }
+            try {
+                Thread.sleep(500 / (pressCount + 1));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         // ------------------------------------------------------------
         // Terminate the Pi4J library
@@ -139,92 +164,7 @@ public class ADCReader implements Runnable{
         // Shutdown Pi4J
         pi4j.shutdown();
 
-    }
-    public void initGPIO2()
-    {
 
-        // create Pi4J console wrapper/helper
-        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
-        final var console = new Console();
-
-        // print program title/header
-        console.title("<-- The Pi4J Project -->", "Basic Digital Input Example From Properties");
-
-        // allow for user to exit program using CTRL-C
-        console.promptForExit();
-
-        // Initialize Pi4J with an auto context
-        // An auto context includes AUTO-DETECT BINDINGS enabled
-        // which will load all detected Pi4J extension libraries
-        // (Platforms and Providers) in the class path
-        //var pi4j = Pi4J.newAutoContext();
-
-        // create a properties map with ".address" and ".shutdown" properties for the digital output configuration
-        Properties properties = new Properties();
-        properties.put("id", "my_digital_input");
-        properties.put("address", DIGITAL_INPUT_PIN);
-        properties.put("pull", "UP");
-        properties.put("name", "MY-DIGITAL-INPUT");
-
-        // create a digital input instance using the default digital input provider
-        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
-        var config = DigitalInput.newConfigBuilder(pi4j)
-                .load(properties)
-                .build();
-
-        var input = pi4j.din().create(config);
-
-        // setup a digital output listener to listen for any state changes on the digital input
-        input.addListener(console::print);
-
-        // lets read the digital output state
-        console.print("DIGITAL INPUT [");
-        console.print(input);
-        console.print("] STATE IS [");
-        console.println(input.state() + "]");
-
-        console.print("DIGITAL INPUT [");
-        console.print(input);
-        console.print("] PULL RESISTANCE IS [");
-        console.println(input.pull() + "]");
-
-        console.println();
-        console.println("CHANGE INPUT STATES VIA I/O HARDWARE AND CHANGE EVENTS WILL BE PRINTED BELOW:");
-
-        // wait (block) for user to exit program using CTRL-C
-        try {
-            console.waitForExit();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // shutdown Pi4J
-        console.println("ATTEMPTING TO SHUTDOWN/TERMINATE THIS PROGRAM");
-        pi4j.shutdown();
-
-    }
-    public void initGPIOOld()
-    {
-        var pi4j = Pi4J.newAutoContext();
-        Properties properties = new Properties();
-        properties.put("id", "my_digital_input");
-        properties.put("address", 24);
-        properties.put("pull", "UP");
-        properties.put("name", "MY-DIGITAL-INPUT");
-
-        var config = DigitalInput.newConfigBuilder(pi4j)
-                .load(properties)
-                .build();
-
-        var input = pi4j.din().create(config);
-
-        input.addListener(e -> {
-            System.out.println("Button happens");
-            if (e.state() == DigitalState.HIGH) {
-                System.out.println("Button is pressed");
-            }
-        });
-        System.out.println("Button ready");
     }
 
     public int getADCValue(int id) {
@@ -264,27 +204,7 @@ public class ADCReader implements Runnable{
             System.out.println("Value-2:" + zahl2);
             //System.out.println("Value:"+zahl1);
             System.out.println("Finishing");
-/*
-            if (config != 0x00) {
-                System.out.println("TCA9534 is not configured as OUTPUT, setting register 0x" + String
-                        .format("%02x", TCA9534_REG_ADDR_CFG) + " to 0x00");
-                currentState = 0x00;
-                tca9534Dev.writeRegister(TCA9534_REG_ADDR_OUT_PORT, currentState);
-                tca9534Dev.writeRegister(TCA9534_REG_ADDR_CFG, (byte) 0x00);
-            }
 
-            // bit 8, is pin 1 on the board itself, so set pins in reverse:
-            currentState = setPin(currentState, 8, tca9534Dev, true);
-            Thread.sleep(500L);
-            currentState = setPin(currentState, 8, tca9534Dev, false);
-            Thread.sleep(500L);
-
-            currentState = setPin(currentState, 7, tca9534Dev, true);
-            Thread.sleep(500L);
-            currentState = setPin(currentState, 7, tca9534Dev, false);
-            Thread.sleep(500L);
-
-*/
 
         }
     }
