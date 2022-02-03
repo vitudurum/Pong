@@ -3,7 +3,6 @@ package ch.vitudurum;
 
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
-import com.pi4j.io.gpio.digital.DigitalInputProvider;
 import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
@@ -53,65 +52,92 @@ public class ADCReader implements Runnable{
     }
     public void  initGPIO()
     {
-        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "INFO");
 
-        // TODO :: REMOVE TEMPORARY PROPERTIES WHEN NATIVE PIGPIO LIB IS READY
-        // this temporary property is used to tell
-        // PIGPIO which remote Raspberry Pi to connect to
-        System.setProperty("pi4j.host", "rpi3bp.savage.lan");
 
-        // create Pi4J console wrapper/helper
-        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
         final var console = new Console();
 
-        // print program title/header
-        console.title("<-- The Pi4J Project -->", "Basic Digital Input Example");
+        // Print program title/header
+        console.title("<-- The Pi4J Project -->", "Minimal Example project");
 
-        // allow for user to exit program using CTRL-C
-        console.promptForExit();
+        // ************************************************************
+        //
+        // WELCOME TO Pi4J:
+        //
+        // Here we will use this getting started example to
+        // demonstrate the basic fundamentals of the Pi4J library.
+        //
+        // This example is to introduce you to the boilerplate
+        // logic and concepts required for all applications using
+        // the Pi4J library.  This example will do use some basic I/O.
+        // Check the pi4j-examples project to learn about all the I/O
+        // functions of Pi4J.
+        //
+        // ************************************************************
 
-        // Initialize Pi4J with an auto context
-        // An auto context includes AUTO-DETECT BINDINGS enabled
-        // which will load all detected Pi4J extension libraries
-        // (Platforms and Providers) in the class path
-      //  var pi4j = Pi4J.newAutoContext();
+        // ------------------------------------------------------------
+        // Initialize the Pi4J Runtime Context
+        // ------------------------------------------------------------
+        // Before you can use Pi4J you must initialize a new runtime
+        // context.
+        //
+        // The 'Pi4J' static class includes a few helper context
+        // creators for the most common use cases.  The 'newAutoContext()'
+        // method will automatically load all available Pi4J
+        // extensions found in the application's classpath which
+        // may include 'Platforms' and 'I/O Providers'
+        var pi4j = Pi4J.newAutoContext();
 
-        // create a digital input instance using the default digital input provider
-        // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
-        var config = DigitalInput.newConfigBuilder(pi4j)
-                //.id("my-digital-input")
+        // ------------------------------------------------------------
+        // Output Pi4J Context information
+        // ------------------------------------------------------------
+        // The created Pi4J Context initializes platforms, providers
+        // and the I/O registry. To help you to better understand this
+        // approach, we print out the info of these. This can be removed
+        // from your own application.
+        // OPTIONAL
+       // PrintInfo.printLoadedPlatforms(console, pi4j);
+        //PrintInfo.printDefaultPlatform(console, pi4j);
+        //PrintInfo.printProviders(console, pi4j);
+
+        // Here we will create I/O interfaces for a (GPIO) digital output
+        // and input pin. We define the 'provider' to use PiGpio to control
+        // the GPIO.
+
+
+        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
+                .id("button")
+                .name("Press button")
                 .address(DIGITAL_INPUT_PIN)
                 .pull(PullResistance.PULL_DOWN)
-                .build();
-
-        // get a Digital Input I/O provider from the Pi4J context
-        DigitalInputProvider digitalInputProvider = pi4j.provider("pigpio-digital-input");
-
-        var input = digitalInputProvider.create(config);
-
-        // setup a digital output listener to listen for any state changes on the digital input
-        input.addListener(event -> {
-            Integer count = (Integer) event.source().metadata().get("count").value();
-            System.out.println("Count:"+count);
-            console.print("Count:"+count);
+                .debounce(3000L)
+                .provider("pigpio-digital-input");
+        var button = pi4j.create(buttonConfig);
+        button.addListener(e -> {
+            if (e.state() == DigitalState.LOW) {
+                pressCount++;
+                console.println("Button was pressed for the " + pressCount + "th time");
+            }
         });
 
-        // lets read the  output state
-        console.print("THE STARTING DIGITAL INPUT STATE IS [");
-        console.println(input.state() + "]");
+        // OPTIONAL: print the registry
+       // PrintInfo.printRegistry(console, pi4j);
 
-        console.println("CHANGE INPUT STATES VIA I/O HARDWARE AND CHANGE EVENTS WILL BE PRINTED BELOW:");
 
-        // wait (block) for user to exit program using CTRL-C
-        try {
-            console.waitForExit();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        // shutdown Pi4J
-        console.println("ATTEMPTING TO SHUTDOWN/TERMINATE THIS PROGRAM");
+        // ------------------------------------------------------------
+        // Terminate the Pi4J library
+        // ------------------------------------------------------------
+        // We we are all done and want to exit our application, we must
+        // call the 'shutdown()' function on the Pi4J static helper class.
+        // This will ensure that all I/O instances are properly shutdown,
+        // released by the the system and shutdown in the appropriate
+        // manner. Terminate will also ensure that any background
+        // threads/processes are cleanly shutdown and any used memory
+        // is returned to the system.
+
+        // Shutdown Pi4J
         pi4j.shutdown();
+
     }
     public void initGPIO2()
     {
