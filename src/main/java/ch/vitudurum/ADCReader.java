@@ -34,8 +34,8 @@ public class ADCReader implements Runnable{
 
     public ADCReader(Pong pong) {
         this.pong=pong;
-        //initIC2();
-        initGPIO();
+        initIC2();
+       // initGPIO();
     }
     public void initIC2()
     {
