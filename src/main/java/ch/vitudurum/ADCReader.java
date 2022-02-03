@@ -27,7 +27,6 @@ public class ADCReader implements Runnable{
     boolean up=false;
     Pong pong;
     int ADCResolution=255;
-    Context pi4j;
     private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
 
@@ -35,7 +34,12 @@ public class ADCReader implements Runnable{
 
     public ADCReader(Pong pong) {
         this.pong=pong;
-        pi4j = Pi4J.newAutoContext();
+        //initIC2();
+        initGPIO();
+    }
+    public void initIC2()
+    {
+        Context pi4j = Pi4J.newAutoContext();
         I2CProvider i2CProvider = pi4j.provider("linuxfs-i2c");
         I2CConfig i2cConfig = I2C.newConfigBuilder(pi4j).id("7830").bus(1).device(0x4B).build();
         try (I2C tca9534Dev = i2CProvider.create(i2cConfig)) {
@@ -53,7 +57,6 @@ public class ADCReader implements Runnable{
         {
             System.out.println("Error connecting adc...");
         }
-        initGPIO();
     }
     public void  initGPIO(){
 
