@@ -74,7 +74,7 @@ public class ADCReader implements Runnable{
         // An auto context includes AUTO-DETECT BINDINGS enabled
         // which will load all detected Pi4J extension libraries
         // (Platforms and Providers) in the class path
-        var pi4j = Pi4J.newAutoContext();
+      //  var pi4j = Pi4J.newAutoContext();
 
         // create a digital input instance using the default digital input provider
         // we will use the PULL_DOWN argument to set the pin pull-down resistance on this GPIO pin
@@ -92,11 +92,11 @@ public class ADCReader implements Runnable{
         // setup a digital output listener to listen for any state changes on the digital input
         input.addListener(event -> {
             Integer count = (Integer) event.source().metadata().get("count").value();
-            //console.println(event + " === " + count);
             System.out.println("Count:"+count);
+            console.print("Count:"+count);
         });
 
-        // lets read the analog output state
+        // lets read the  output state
         console.print("THE STARTING DIGITAL INPUT STATE IS [");
         console.println(input.state() + "]");
 
