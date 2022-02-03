@@ -113,6 +113,7 @@ public class ADCReader implements Runnable{
                 .provider("pigpio-digital-input");
         var button = pi4j.create(buttonConfig);
         button.addListener(e -> {
+            System.out.println("Action...");
             if (e.state() == DigitalState.LOW) {
                 pressCount++;
                 console.println("Button was pressed for the " + pressCount + "th time");
