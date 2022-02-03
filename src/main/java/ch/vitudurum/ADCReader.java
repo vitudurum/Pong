@@ -29,13 +29,13 @@ public class ADCReader implements Runnable{
     int ADCResolution=255;
     private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
-
+    Context pi4j;
 
 
     public ADCReader(Pong pong) {
         this.pong=pong;
         initIC2();
-       // initGPIO();
+        initGPIO();
     }
     public void initIC2()
     {
