@@ -85,7 +85,7 @@ public class ADCReader implements Runnable{
         // method will automatically load all available Pi4J
         // extensions found in the application's classpath which
         // may include 'Platforms' and 'I/O Providers'
-        var pi4j = Pi4J.newAutoContext();
+      //  var pi4j = Pi4J.newAutoContext();
 
         // ------------------------------------------------------------
         // Output Pi4J Context information
