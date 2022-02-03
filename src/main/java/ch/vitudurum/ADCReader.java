@@ -53,7 +53,7 @@ public class ADCReader implements Runnable{
         {
             System.out.println("Error connecting adc...");
         }
-        if (up) initGPIO();
+        initGPIO();
     }
     public void  initGPIO(){
 
