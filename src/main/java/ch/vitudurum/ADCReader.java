@@ -18,10 +18,8 @@ import java.util.Properties;
 public class ADCReader implements Runnable{
     private static int pressCount = 0;
     public static final int DIGITAL_INPUT_PIN =24;
-
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
     private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
-    //private static final byte TCA9534_REG_ADDR_CFG = 0x03;
     private static final byte TCA9534_REG_ADDR_CFG = (byte) 0x4B;
     I2C tca9534Dev;
     boolean up=false;
@@ -35,7 +33,7 @@ public class ADCReader implements Runnable{
     public ADCReader(Pong pong) {
         this.pong=pong;
         initIC2();
-       // initGPIO();
+        initGPIO();
     }
     public void initIC2()
     {
@@ -59,6 +57,30 @@ public class ADCReader implements Runnable{
         }
     }
     public void  initGPIO(){
+
+        System.out.println("Initiating GPIO...");
+        // Create Pi4J console wrapper/helper
+        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
+        var pi4j = Pi4J.newAutoContext();
+
+        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
+                .id("button")
+                .name("Press button")
+                .address(PIN_BUTTON)
+                .pull(PullResistance.PULL_DOWN)
+                .debounce(3000L)
+                .provider("pigpio-digital-input");
+        var button = pi4j.create(buttonConfig);
+        button.addListener(e -> {
+            if (e.state() == DigitalState.LOW) {
+                pressCount++;
+                System.out.println("Button was pressed for the " + pressCount + "th time");
+            }
+        });
+
+
+    }
+    public void  initGPIOOK(){
 
         System.out.println("Initiating GPIO...");
         // Create Pi4J console wrapper/helper
