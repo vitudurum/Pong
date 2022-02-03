@@ -55,7 +55,7 @@ public class ADCReader implements Runnable{
         }
         catch (Exception e)
         {
-            System.out.println("Error connecting adc...");
+            System.out.println("Error connecting adc:"+e.getMessage());
         }
     }
     public void  initGPIO(){
