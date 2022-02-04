@@ -34,25 +34,7 @@ public class Ball implements Runnable {
         this.x = x;
         this.y = y;
 
-/*
-        //Set ball moving randomly
-        r = new Random();
-        int rXDir = r.nextInt(1);
-        if (rXDir == 0)
-            rXDir--;
-        setXDirection(rXDir);
 
-        double rYDir = r.nextDouble();
-        rYDir=rYDir-0.5;
-        System.out.println(rYDir);
-        setYDirection(rYDir);
-*/
-/*
-        int rYDir = r.nextInt(1);
-        if (rYDir == 0)
-            rYDir--;
-        setYDirection(rYDir);
-*/
         //create "ball"
         ball = new Rectangle(this.x, this.y, 25, 25);
      resetBall();
@@ -93,12 +75,17 @@ public class Ball implements Runnable {
     public void collision() {
         if (ball.intersects(p1.paddle)) {
             setXDirection(+1);
+            // be safe
+            ball.x=ball.x+Pong.paddle_width;
             incSpeed();
-
+            //System.out.println("Pong-L...");
         }
         if (ball.intersects(p2.paddle)) {
             setXDirection(-1);
+            // be safe
+            ball.x=ball.x-Pong.paddle_width;
             incSpeed();
+            //System.out.println("Pong-R...");
         }
     }
     public void resetBall()
