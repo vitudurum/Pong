@@ -4,6 +4,9 @@ package ch.vitudurum;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 
@@ -30,10 +33,21 @@ public class Pong extends JFrame {
     Rectangle border;
     //String NamePLayer1;
     //String NamePLayer2;
-
+    static public Sound sound;
 
     //constructor for window
     public Pong() {
+        try {
+            sound = new Sound();
+            //sound.play();
+
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
 		/*
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Name Player 1:");
@@ -106,5 +120,10 @@ public class Pong extends JFrame {
 
     public Ball getBall() {
         return b;
+    }
+
+    static public void PlaySound()
+    {
+        sound.play();
     }
 }
