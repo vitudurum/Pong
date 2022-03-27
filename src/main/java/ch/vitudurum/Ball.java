@@ -116,27 +116,6 @@ public class Ball implements Runnable {
         setYDirection(rYDir);
 
     }
-
-    public void anspiel()
-    {
-        System.out.println("-->anspiel");
-
-        ball.x = Pong.gWidth/2;
-        ballPosY=  Pong.gHeight/2;
-
-        r = new Random();
-        int rXDir = r.nextInt(2);
-        if (rXDir == 0)
-            rXDir--;
-        setXDirection(rXDir);
-
-
-        double rYDir = r.nextDouble();
-        rYDir=rYDir-0.5;
-        rYDir=rYDir*2;
-        setYDirection(rYDir);
-
-    }
 public void win(){
         gameRun=false;
         setXDirection(0);
@@ -166,13 +145,11 @@ public void startGame()
         //bounce the ball when it hits the edge of the screen
         if (ball.x <= Pong.border_Left) {
             setXDirection(+1);
-
             p2score++;
             if (p2score >=MAXP) win();
             else {
                 resetSpeed();
-                //resetBall();
-                anspiel();
+                resetBall();
             }
         }
         if (ball.x >= Pong.border_Right) {
@@ -181,7 +158,7 @@ public void startGame()
             if (p1score >=MAXP) win();
             else {
                 resetSpeed();
-                anspiel();
+                resetBall();
             }
         }
 
