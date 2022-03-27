@@ -86,6 +86,7 @@ public class Ball implements Runnable {
             // be safe
             ball.x=ball.x+Pong.paddle_width;
             incSpeed();
+            Pong.PlaySound();
             //System.out.println("Pong-L...");
         }
         if (ball.intersects(p2.paddle)) {
@@ -93,6 +94,8 @@ public class Ball implements Runnable {
             // be safe
             ball.x=ball.x-Pong.paddle_width;
             incSpeed();
+            Pong.PlaySound();
+
             //System.out.println("Pong-R...");
         }
     }

@@ -37,7 +37,7 @@ public class ADCReader implements Runnable{
             initGPIO();
         } catch (Exception e)
         {
-
+            System.out.println(e.getMessage());
         };
     }
     public void initIC2()
