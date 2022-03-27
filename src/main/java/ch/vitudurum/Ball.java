@@ -14,6 +14,7 @@ public class Ball implements Runnable {
 
     //global variables
     int x, y;
+    final static int MAXP=3;
     double xDirection, yDirection;
 
     int p1score, p2score;
@@ -24,10 +25,12 @@ public class Ball implements Runnable {
     //int incrVal = 300000;
     double incFact = 0.9;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
+    Font stringFontEnde = new Font("SansSerif", Font.PLAIN, 50);
     Rectangle ball;
     int wait=initSpeed;
     Random r;
     double ballPosY=Pong.gHeight/2;
+    boolean gameRun=true;
 
     public Ball(int x, int y) {
         p1score = p2score = 0;
@@ -54,7 +57,12 @@ public class Ball implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
         g.setFont(stringFont);
-        g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        //g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        if (!gameRun) {
+            g.setColor(Color.RED);
+            g.setFont(stringFontEnde);
+            g.drawString("Game over",Pong.gWidth / 2 - 10,500);
+        }
     }
 
     public void incSpeed() {
@@ -109,7 +117,48 @@ public class Ball implements Runnable {
 
     }
 
+    public void anspiel()
+    {
+        System.out.println("-->anspiel");
+
+        ball.x = Pong.gWidth/2;
+        ballPosY=  Pong.gHeight/2;
+
+        r = new Random();
+        int rXDir = r.nextInt(2);
+        if (rXDir == 0)
+            rXDir--;
+        setXDirection(rXDir);
+
+
+        double rYDir = r.nextDouble();
+        rYDir=rYDir-0.5;
+        rYDir=rYDir*2;
+        setYDirection(rYDir);
+
+    }
+public void win(){
+        gameRun=false;
+        setXDirection(0);
+        setYDirection(0);
+     ball.x = Pong.gWidth/2;
+    ballPosY=  Pong.gHeight/2;
+
+}
+public void startGame()
+{
+    System.out.println("Starting Game...");
+    p1score=0;
+    p2score=0;
+    p1.startGame=false;
+    p2.startGame=false;
+    gameRun=true;
+    resetBall();
+    resetSpeed();
+}
     public void move() {
+        if (p1.startGame==true)
+            startGame();
         collision();
         ballPosY=ballPosY+yDirection;
         ball.x += xDirection;
@@ -117,15 +166,23 @@ public class Ball implements Runnable {
         //bounce the ball when it hits the edge of the screen
         if (ball.x <= Pong.border_Left) {
             setXDirection(+1);
+
             p2score++;
-            resetSpeed();
-            resetBall();
+            if (p2score >=MAXP) win();
+            else {
+                resetSpeed();
+                //resetBall();
+                anspiel();
+            }
         }
         if (ball.x >= Pong.border_Right) {
             setXDirection(-1);
             p1score++;
-            resetSpeed();
-            resetBall();
+            if (p1score >=MAXP) win();
+            else {
+                resetSpeed();
+                anspiel();
+            }
         }
 
         if (ball.y <= Pong.border_Up) {

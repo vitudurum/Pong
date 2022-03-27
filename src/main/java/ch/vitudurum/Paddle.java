@@ -16,8 +16,8 @@ public class Paddle implements Runnable{
 	int x, y, yDirection;
 	public int id;
 	Rectangle paddle;
-
-
+	Ball ball;
+    boolean startGame=false;
 	public Paddle(int x, int y,int id) {
 		this.x = x;
 		this.y = y;
@@ -27,6 +27,10 @@ public class Paddle implements Runnable{
 	}
 		
 	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
+		    startGame=true;
+		}
+
 			if (id==0) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
 					setYDirection(-10);
