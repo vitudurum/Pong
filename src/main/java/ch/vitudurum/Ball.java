@@ -14,16 +14,16 @@ public class Ball implements Runnable {
 
     //global variables
     int x, y;
-    final static int MAXP=3;
+    final static int MAXP=10;
     double xDirection, yDirection;
 
     int p1score, p2score;
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1);
-    int initSpeed = 5000000;
+    int initSpeed = 2500000;
     //int incrVal = 300000;
-    double incFact = 0.9;
+    double incFact = 0.97;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Font stringFontEnde = new Font("SansSerif", Font.PLAIN, 50);
     Rectangle ball;
@@ -31,6 +31,7 @@ public class Ball implements Runnable {
     Random r;
     double ballPosY=Pong.gHeight/2;
     boolean gameRun=true;
+    int anspiel=0;
 
     public Ball(int x, int y) {
         p1score = p2score = 0;
@@ -139,12 +140,40 @@ public void startGame()
     resetSpeed();
 }
     public void move() {
-        if (p1.startGame==true)
+        if (p1.startGame==true) {
+            anspiel=0;
             startGame();
-        collision();
-        ballPosY=ballPosY+yDirection;
-        ball.x += xDirection;
-        ball.y = (int) ballPosY;
+        }
+        if (p1.kick==true)
+        {
+             anspiel=0;
+            p1.kick=false;
+        }
+
+       if (anspiel==0) collision();
+        if (anspiel==0)
+        {
+            ballPosY = ballPosY + yDirection;
+            ball.x += xDirection;
+            ball.y = (int) ballPosY;
+        }
+
+        if (anspiel==1)
+        {
+            //System.out.println("Anspiel 1");
+            ball.x =p1.paddle.x+20;
+            ball.y =p1.paddle.y+p1.paddle.height/2-ball.height/2;
+            ballPosY=ball.y;
+        }
+        if (anspiel==2)
+        {
+            //System.out.println("Anspiel 2");
+            ball.x =p2.paddle.x-20;
+            ball.y =p2.paddle.y+p2.paddle.height/2-ball.height/2;
+            ballPosY=ball.y;
+        }
+
+
         //bounce the ball when it hits the edge of the screen
         if (ball.x <= Pong.border_Left) {
             setXDirection(+1);
@@ -152,7 +181,7 @@ public void startGame()
             if (p2score >=MAXP) win();
             else {
                 resetSpeed();
-                resetBall();
+                anSpiel(1);
             }
         }
         if (ball.x >= Pong.border_Right) {
@@ -161,7 +190,7 @@ public void startGame()
             if (p1score >=MAXP) win();
             else {
                 resetSpeed();
-                resetBall();
+                anSpiel(2);
             }
         }
 
@@ -173,7 +202,10 @@ public void startGame()
             setYDirection(getYDirection()*-1);
         }
     }
-
+public void anSpiel(int a)
+{
+    anspiel=a;
+}
     @Override
     public void run() {
         try {
