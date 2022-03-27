@@ -14,7 +14,7 @@ public class Ball implements Runnable {
 
     //global variables
     int x, y;
-    final static int MAXP=10;
+    final static int MAXP=5;
     double xDirection, yDirection;
 
     int p1score, p2score;
@@ -62,7 +62,7 @@ public class Ball implements Runnable {
         if (!gameRun) {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
-            g.drawString("Game over",Pong.gWidth / 2 - 10,500);
+            g.drawString("Game over",Pong.gWidth / 2 - 80,300);
         }
     }
 
