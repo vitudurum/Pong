@@ -71,7 +71,7 @@ public class ADCReader implements Runnable{
         var pi4j = Pi4J.newAutoContext();
 
         var buttonConfigS1 = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
+                .id("PIN_BUTTON_SHOT1")
                 .name("Press button")
                 .address(PIN_BUTTON_SHOT1)
                 .pull(PullResistance.PULL_DOWN)
@@ -79,7 +79,7 @@ public class ADCReader implements Runnable{
                 .provider("pigpio-digital-input");
 
         var buttonConfigS2 = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
+                .id("PIN_BUTTON_SHOT2")
                 .name("Press button")
                 .address(PIN_BUTTON_SHOT2)
                 .pull(PullResistance.PULL_DOWN)
@@ -87,7 +87,7 @@ public class ADCReader implements Runnable{
                 .provider("pigpio-digital-input");
 
         var buttonConfigRestart = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
+                .id("PIN_BUTTON_RESTART")
                 .name("Press button")
                 .address(PIN_BUTTON_RESTART)
                 .pull(PullResistance.PULL_DOWN)
