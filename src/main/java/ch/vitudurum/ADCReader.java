@@ -16,7 +16,7 @@ import com.pi4j.util.Console;
 import java.util.Properties;
 
 public class ADCReader implements Runnable{
-    private static int pressCount = 0;
+    //private static int pressCount = 0;
     public static final int DIGITAL_INPUT_PIN =24;
     private static final byte TCA9534_REG_ADDR_OUT_PORT1 = (byte) 0x84;
     private static final byte TCA9534_REG_ADDR_OUT_PORT2 = (byte) 0xc4;
@@ -25,7 +25,9 @@ public class ADCReader implements Runnable{
     boolean up=false;
     Pong pong;
     int ADCResolution=255;
-    private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
+    private static final int PIN_BUTTON_SHOT1 = 24; // PIN 18 = BCM 24
+    private static final int PIN_BUTTON_SHOT2 = 25; // PIN 18 = BCM 24
+    private static final int PIN_BUTTON_RESTART = 26; // PIN 18 = BCM 24
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
     Context pi4j;
 
@@ -68,23 +70,55 @@ public class ADCReader implements Runnable{
         // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
         var pi4j = Pi4J.newAutoContext();
 
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
+        var buttonConfigS1 = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("Press button")
-                .address(PIN_BUTTON)
+                .address(PIN_BUTTON_SHOT1)
                 .pull(PullResistance.PULL_DOWN)
                 .debounce(3000L)
                 .provider("pigpio-digital-input");
-        var button = pi4j.create(buttonConfig);
-        button.addListener(e -> {
+
+        var buttonConfigS2 = DigitalInput.newConfigBuilder(pi4j)
+                .id("button")
+                .name("Press button")
+                .address(PIN_BUTTON_SHOT2)
+                .pull(PullResistance.PULL_DOWN)
+                .debounce(3000L)
+                .provider("pigpio-digital-input");
+
+        var buttonConfigRestart = DigitalInput.newConfigBuilder(pi4j)
+                .id("button")
+                .name("Press button")
+                .address(PIN_BUTTON_RESTART)
+                .pull(PullResistance.PULL_DOWN)
+                .debounce(3000L)
+                .provider("pigpio-digital-input");
+
+
+        var button_shot1 = pi4j.create(buttonConfigS1);
+        var button_shot2 = pi4j.create(buttonConfigS2);
+        var button_restart = pi4j.create(buttonConfigRestart);
+
+        button_shot1.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
-                pressCount++;
-                System.out.println("Button was pressed for the " + pressCount + "th time");
+                System.out.println("Button Shot P1 was pressed");
             }
+
+        });
+        button_shot2.addListener(e -> {
+            if (e.state() == DigitalState.LOW) {
+                System.out.println("Button Shot P2 was pressed");
+            }
+
+        });button_restart.addListener(e -> {
+            if (e.state() == DigitalState.LOW) {
+                System.out.println("Button Restart was pressed");
+            }
+
         });
 
-
     }
+    /*
     public void  initGPIOOK(){
 
         System.out.println("Initiating GPIO...");
@@ -180,6 +214,8 @@ public class ADCReader implements Runnable{
             }
         }
 
+
+
         // ------------------------------------------------------------
         // Terminate the Pi4J library
         // ------------------------------------------------------------
@@ -196,7 +232,7 @@ public class ADCReader implements Runnable{
 
 
     }
-
+*/
     public int getADCValue(int id) {
         if (id == 0)
             return tca9534Dev.readRegister(TCA9534_REG_ADDR_OUT_PORT1);
