@@ -18,7 +18,7 @@ public class Paddle implements Runnable{
 	Rectangle paddle;
 	Ball ball;
     boolean startGame=false;
-	boolean kick=false;
+	private boolean kick=false;
 	public Paddle(int x, int y,int id) {
 		this.x = x;
 		this.y = y;
@@ -124,6 +124,13 @@ public class Paddle implements Runnable{
 	}
 
 
-	
-
+	public void setKick(boolean k)
+	{
+		System.out.println("Set Kick "+id+" "+k);
+		this.kick=k;
+	}
+	public boolean getKick()
+	{
+		return kick;
+	}
 }

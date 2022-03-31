@@ -144,17 +144,17 @@ public void startGame()
         if (p1.startGame==true) {
             startGame();
         }
-        if (p1.kick==true && anspiel==1)
+        if (p1.getKick()==true && anspiel==1)
         {
              anspiel=0;
-             p1.kick=false;
-             p2.kick=false;
+            p1.setKick(false);
+            p2.setKick(false);
         }
-        if (p2.kick==true && anspiel==2)
+        if (p2.getKick()==true && anspiel==2)
         {
             anspiel=0;
-            p1.kick=false;
-            p2.kick=false;
+            p1.setKick(false);
+            p2.setKick(false);
         }
 
 
