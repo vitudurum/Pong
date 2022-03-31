@@ -210,8 +210,7 @@ public void anSpiel(int a)
     public void run() {
         try {
             while (true) {
-                move();
-                //Thread.sleep((long) wait,999999);
+                move();                //Thread.sleep((long) wait,999999);
                 //final long INTERVAL = 10000000;
                 long start = System.nanoTime();
                 long end=0;
