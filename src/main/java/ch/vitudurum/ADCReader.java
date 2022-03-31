@@ -102,12 +102,14 @@ public class ADCReader implements Runnable{
         button_shot1.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
                 System.out.println("Button Shot P1 was pressed");
+                pong.getBall().p1.kick=true;
             }
 
         });
         button_shot2.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
                 System.out.println("Button Shot P2 was pressed");
+                pong.getBall().p2.kick=true;
             }
 
         });button_restart.addListener(e -> {

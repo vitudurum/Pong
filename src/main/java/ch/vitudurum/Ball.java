@@ -144,10 +144,15 @@ public void startGame()
         if (p1.startGame==true) {
             startGame();
         }
-        if (p1.kick==true)
+        if (p1.kick==true && anspiel==1)
         {
              anspiel=0;
             p1.kick=false;
+        }
+        if (p2.kick==true && anspiel==2)
+        {
+            anspiel=0;
+            p2.kick=false;
         }
 
        if (anspiel==0) collision();
