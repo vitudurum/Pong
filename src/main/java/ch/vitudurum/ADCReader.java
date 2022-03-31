@@ -25,9 +25,9 @@ public class ADCReader implements Runnable{
     boolean up=false;
     Pong pong;
     int ADCResolution=255;
-    private static final int PIN_BUTTON_SHOT1 = 24; // PIN 18 = BCM 24
-    private static final int PIN_BUTTON_SHOT2 = 25; // PIN 18 = BCM 24
-    private static final int PIN_BUTTON_RESTART = 26; // PIN 18 = BCM 24
+    private static final int PIN_BUTTON_SHOT1 = 23; // PIN 18 = BCM 24
+    private static final int PIN_BUTTON_SHOT2 = 24; // PIN 18 = BCM 24
+    private static final int PIN_BUTTON_RESTART = 25; // PIN 18 = BCM 24
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
     Context pi4j;
 
