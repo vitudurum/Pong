@@ -232,7 +232,7 @@ public void anSpiel(int a)
                 }while(start + wait >= end);
             }
         } catch (Exception e) {
-            System.err.println("Ball:"+e.getMessage());
+            System.out.println("Ball:"+e.getMessage());
         }
 
     }
