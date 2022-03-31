@@ -142,10 +142,7 @@ public void startGame()
 }
     public void move() {
 
-        if (p1==null)
-            System.out.println("Hilfe P1 ist Null");
-        if (p2==null)
-        System.out.println("Hilfe P2 ist Null");
+        System.out.println("m1");
 
         if (p1.startGame==true) {
             startGame();
@@ -163,7 +160,7 @@ public void startGame()
             p2.setKick(false);
         }
 
-
+        System.out.println("m2");
         if (anspiel==0)
         {
             collision();
@@ -202,7 +199,7 @@ public void startGame()
             }
 
         }
-
+        System.out.println("m3");
         if (anspiel==1)
         {
             //System.out.println("Anspiel 1");
