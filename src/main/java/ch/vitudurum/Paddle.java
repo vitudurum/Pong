@@ -19,10 +19,11 @@ public class Paddle implements Runnable{
 	Ball ball;
     boolean startGame=false;
 	private boolean kick=false;
-	public Paddle(int x, int y,int id) {
+	public Paddle(int x, int y,int id, Ball b) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
+		this.ball=b;
 		paddle = new Rectangle(x, y, Pong.paddle_width,Pong.paddle_height);
 
 	}
@@ -33,10 +34,11 @@ public class Paddle implements Runnable{
 		    startGame=true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_1) {
-			if (id==0) kick=true;
+			if (id==0) ball.Kick(id);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_2) {
-			if (id==1) kick=true;
+			if (id==1) ball.Kick(id);
+
 		}
 
 			if (id==0) {

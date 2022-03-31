@@ -19,8 +19,8 @@ public class Ball implements Runnable {
 
     int p1score, p2score;
 
-	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0);
-	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1);
+	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
+	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
     int initSpeed = 2500000;
     //int incrVal = 300000;
     double incFact = 0.97;
@@ -232,7 +232,7 @@ public void anSpiel(int a)
                 }while(start + wait >= end);
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("Ball:"+e.getMessage());
         }
 
     }
@@ -244,4 +244,12 @@ public void anSpiel(int a)
 	{
 		return p2;
 	}
+    public void Kick(int id)
+    {
+        if (id==0)
+            p1.setKick(true);
+        if (id==1)
+            p2.setKick(true);
+
+    }
 }
