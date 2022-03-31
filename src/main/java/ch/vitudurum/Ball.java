@@ -141,6 +141,12 @@ public void startGame()
     resetSpeed();
 }
     public void move() {
+
+        if (p1==null)
+            System.out.println("Hilfe P1 ist Null");
+        if (p2==null)
+        System.out.println("Hilfe P2 ist Null");
+
         if (p1.startGame==true) {
             startGame();
         }
