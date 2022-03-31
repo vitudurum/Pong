@@ -113,6 +113,7 @@ public class ADCReader implements Runnable{
         });button_restart.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
                 System.out.println("Button Restart was pressed");
+                pong.getBall().startGame();
             }
 
         });
