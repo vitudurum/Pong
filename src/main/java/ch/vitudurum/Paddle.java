@@ -28,11 +28,15 @@ public class Paddle implements Runnable{
 	}
 		
 	public void keyPressed(KeyEvent e) {
+		//System.out.println("ID:"+id);
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 		    startGame=true;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_A) {
-			kick=true;
+		if (e.getKeyCode() == KeyEvent.VK_1) {
+			if (id==0) kick=true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_2) {
+			if (id==1) kick=true;
 		}
 
 			if (id==0) {
