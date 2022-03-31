@@ -164,6 +164,7 @@ public void startGame()
         if (anspiel==0)
         {
             collision();
+            System.out.println("m22");
             ballPosY = ballPosY + yDirection;
             ball.x += xDirection;
             ball.y = (int) ballPosY;
