@@ -147,20 +147,54 @@ public void startGame()
         if (p1.kick==true && anspiel==1)
         {
              anspiel=0;
-            p1.kick=false;
+             p1.kick=false;
+             p2.kick=false;
         }
         if (p2.kick==true && anspiel==2)
         {
             anspiel=0;
+            p1.kick=false;
             p2.kick=false;
         }
 
-       if (anspiel==0) collision();
+
         if (anspiel==0)
         {
+            collision();
             ballPosY = ballPosY + yDirection;
             ball.x += xDirection;
             ball.y = (int) ballPosY;
+
+            //bounce the ball when it hits the edge of the screen
+            if (ball.x <= Pong.border_Left) {
+                setXDirection(+1);
+                p2score++;
+                if (p2score >=MAXP)
+                    win();
+                else {
+                    resetSpeed();
+                    anSpiel(1);
+                }
+            }
+            if (ball.x >= Pong.border_Right) {
+                setXDirection(-1);
+                p1score++;
+                if (p1score >=MAXP)
+                    win();
+                else {
+                    resetSpeed();
+                    anSpiel(2);
+                }
+            }
+
+            if (ball.y <= Pong.border_Up) {
+                setYDirection(getYDirection()*-1);
+            }
+
+            if (ball.y >= Pong.border_Down) {
+                setYDirection(getYDirection()*-1);
+            }
+
         }
 
         if (anspiel==1)
@@ -179,36 +213,10 @@ public void startGame()
         }
 
 
-        //bounce the ball when it hits the edge of the screen
-        if (ball.x <= Pong.border_Left) {
-            setXDirection(+1);
-            p2score++;
-            if (p2score >=MAXP) win();
-            else {
-                resetSpeed();
-                anSpiel(1);
-            }
-        }
-        if (ball.x >= Pong.border_Right) {
-            setXDirection(-1);
-            p1score++;
-            if (p1score >=MAXP) win();
-            else {
-                resetSpeed();
-                anSpiel(2);
-            }
-        }
-
-        if (ball.y <= Pong.border_Up) {
-            setYDirection(getYDirection()*-1);
-        }
-
-        if (ball.y >= Pong.border_Down) {
-            setYDirection(getYDirection()*-1);
-        }
     }
 public void anSpiel(int a)
 {
+    //System.out.println("Anspiel:"+a);
     anspiel=a;
 }
     @Override
