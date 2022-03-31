@@ -221,12 +221,13 @@ public void anSpiel(int a)
 }
     @Override
     public void run() {
+        long start, end;
         try {
             while (true) {
                 move();                //Thread.sleep((long) wait,999999);
                 //final long INTERVAL = 10000000;
-                long start = System.nanoTime();
-                long end=0;
+                 start = System.nanoTime();
+                 end=0;
                 do{
                     end = System.nanoTime();
                 }while(start + wait >= end);
