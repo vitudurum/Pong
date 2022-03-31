@@ -131,6 +131,7 @@ public void win(){
 public void startGame()
 {
     System.out.println("Starting Game...");
+    anspiel=0;
     p1score=0;
     p2score=0;
     p1.startGame=false;
@@ -141,7 +142,6 @@ public void startGame()
 }
     public void move() {
         if (p1.startGame==true) {
-            anspiel=0;
             startGame();
         }
         if (p1.kick==true)
