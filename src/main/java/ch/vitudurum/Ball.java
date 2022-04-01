@@ -83,6 +83,8 @@ public class Ball implements Runnable {
 
     public void collision() {
         System.out.println("C-IN");
+        System.out.println(p1);
+        System.out.println(p2);
         if (ball.intersects(p1.paddle)) {
             setXDirection(+1);
             // be safe
@@ -91,6 +93,7 @@ public class Ball implements Runnable {
             Pong.PlaySound();
             //System.out.println("Pong-L...");
         }
+        System.out.println("C-MID");
         if (ball.intersects(p2.paddle)) {
             setXDirection(-1);
             // be safe
