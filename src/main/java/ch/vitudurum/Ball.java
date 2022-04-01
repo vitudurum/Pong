@@ -82,6 +82,7 @@ public class Ball implements Runnable {
     }
 
     public void collision() {
+        System.out.println("C-IN");
         if (ball.intersects(p1.paddle)) {
             setXDirection(+1);
             // be safe
@@ -99,6 +100,7 @@ public class Ball implements Runnable {
 
             //System.out.println("Pong-R...");
         }
+        System.out.println("C-OUT");
     }
     public void resetBall()
     {
