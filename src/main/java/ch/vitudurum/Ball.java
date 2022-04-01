@@ -83,8 +83,6 @@ public class Ball implements Runnable {
 
     public void collision() {
 
-        System.out.println(p1);
-        System.out.println(p2);
         if (ball.intersects(p1.paddle)) {
             setXDirection(+1);
             // be safe
