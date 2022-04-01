@@ -128,7 +128,7 @@ public class Paddle implements Runnable{
 
 	public void setKick(boolean k)
 	{
-		System.out.println("Set Kick "+id+" "+k);
+		//System.out.println("Set Kick "+id+" "+k);
 		this.kick=k;
 	}
 	public boolean getKick()
