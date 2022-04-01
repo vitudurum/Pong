@@ -82,7 +82,7 @@ public class Ball implements Runnable {
     }
 
     public void collision() {
-        System.out.println("C-IN");
+
         System.out.println(p1);
         System.out.println(p2);
         if (ball.intersects(p1.paddle)) {
@@ -90,24 +90,21 @@ public class Ball implements Runnable {
             // be safe
             ball.x=ball.x+Pong.paddle_width;
             incSpeed();
-            Pong.PlaySound();
+            //Pong.PlaySound();
             //System.out.println("Pong-L...");
         }
-        System.out.println("C-MID");
+
         if (ball.intersects(p2.paddle)) {
             setXDirection(-1);
-            System.out.println("C-MID1");
+
             // be safe
             ball.x=ball.x-Pong.paddle_width;
-            System.out.println("C-MID2");
             incSpeed();
-            System.out.println("C-MID3");
-            Pong.PlaySound();
-            System.out.println("C-MID4");
+            //Pong.PlaySound();
+
 
             //System.out.println("Pong-R...");
         }
-        System.out.println("C-OUT");
     }
     public void resetBall()
     {
@@ -151,7 +148,6 @@ public void startGame()
 }
     public void move() {
 
-        System.out.println("m1");
 
         if (p1.startGame==true) {
             startGame();
@@ -169,11 +165,9 @@ public void startGame()
             p2.setKick(false);
         }
 
-        System.out.println("m2");
         if (anspiel==0)
         {
             collision();
-            System.out.println("m22");
             ballPosY = ballPosY + yDirection;
             ball.x += xDirection;
             ball.y = (int) ballPosY;
@@ -209,7 +203,6 @@ public void startGame()
             }
 
         }
-        System.out.println("m3");
         if (anspiel==1)
         {
             //System.out.println("Anspiel 1");
