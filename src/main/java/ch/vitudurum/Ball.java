@@ -96,10 +96,14 @@ public class Ball implements Runnable {
         System.out.println("C-MID");
         if (ball.intersects(p2.paddle)) {
             setXDirection(-1);
+            System.out.println("C-MID1");
             // be safe
             ball.x=ball.x-Pong.paddle_width;
+            System.out.println("C-MID2");
             incSpeed();
+            System.out.println("C-MID3");
             Pong.PlaySound();
+            System.out.println("C-MID4");
 
             //System.out.println("Pong-R...");
         }
