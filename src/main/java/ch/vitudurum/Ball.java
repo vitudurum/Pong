@@ -167,7 +167,7 @@ public void startGame()
         {
             collision();
             ballPosY = ballPosY + yDirection;
-            System.out.println(xDirection);
+            //System.out.println(xDirection);
             ball.x += xDirection;
             ball.y = (int) ballPosY;
 
