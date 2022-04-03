@@ -326,7 +326,7 @@ public class ADCReader implements Runnable{
                     z2=temp;
                 }
 
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
