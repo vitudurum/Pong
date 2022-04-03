@@ -310,17 +310,20 @@ public class ADCReader implements Runnable{
         int z1=0;
         int temp=0;
         int z2=0;
+        int diff=0;
          try {
             while (isADCUp()) {
                 //move();
                 temp=getADCValue(0);
-                if (temp!=z1)
+                diff = Math.abs(temp-z1);
+                if (temp!=z1 && diff <50)
                 {
                     pong.getBall().getPaddle1().setPaddleValue(temp*Pong.gHeight/ADCResolution);
                     z1=temp;
                 }
                 temp=getADCValue(1);
-                if (temp!=z2)
+                diff = Math.abs(temp-z2);
+                if (temp!=z2 && diff < 50)
                 {
                     pong.getBall().getPaddle2().setPaddleValue(temp*Pong.gHeight/ADCResolution);
                     z2=temp;

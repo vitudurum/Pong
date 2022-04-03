@@ -21,7 +21,7 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 5000000;
+    int initSpeed = 2000000;
     //int incrVal = 300000;
     double incFact = 0.97;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
@@ -112,25 +112,6 @@ public class Ball implements Runnable {
         ballPosY=  Pong.gHeight/2;
 
         r = new Random();
-        int rXDir = r.nextInt(5);
-        if (rXDir == 0)
-            rXDir--;
-        setXDirection(rXDir);
-
-
-        double rYDir = r.nextDouble();
-        rYDir=rYDir-0.5;
-        rYDir=rYDir*2;
-        setYDirection(rYDir);
-    }
-    public void resetBallOrig()
-    {
-        System.out.println("-->Reset Ball");
-
-        ball.x = Pong.gWidth/2;
-        ballPosY=  Pong.gHeight/2;
-
-        r = new Random();
         int rXDir = r.nextInt(2);
         if (rXDir == 0)
             rXDir--;
@@ -142,6 +123,7 @@ public class Ball implements Runnable {
         rYDir=rYDir*2;
         setYDirection(rYDir);
     }
+
 public void win(){
         gameRun=false;
         setXDirection(0);
@@ -191,7 +173,7 @@ public void startGame()
 
             //bounce the ball when it hits the edge of the screen
             if (ball.x <= Pong.border_Left) {
-                setXDirection(+5);
+                setXDirection(+1);
                 p2score++;
                 if (p2score >=MAXP)
                     win();
@@ -201,7 +183,7 @@ public void startGame()
                 }
             }
             if (ball.x >= Pong.border_Right) {
-                setXDirection(-5);
+                setXDirection(-1);
                 p1score++;
                 if (p1score >=MAXP)
                     win();

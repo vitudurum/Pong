@@ -15,7 +15,7 @@ public class Pong extends JFrame {
     //screen size variables.
     //static int gWidth = 1920;
     //static int gHeight = 1080;
-    static int gWidth = 1600;
+    static int gWidth = 1920;
     static int gHeight = 1024;
     static int border_Up = 28;
     static int border_Down = gHeight - 30;
