@@ -21,9 +21,9 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 8000;
+    int initSpeed = 2000000;
     //int incrVal = 300000;
-    double incFact = 0.9;
+    double incFact = 0.97;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Font stringFontEnde = new Font("SansSerif", Font.PLAIN, 50);
     Rectangle ball;
@@ -32,7 +32,6 @@ public class Ball implements Runnable {
     double ballPosY=Pong.gHeight/2;
     boolean gameRun=true;
     int anspiel=0;
-    int xStep=2;
 
     public Ball(int x, int y) {
         p1score = p2score = 0;
@@ -55,12 +54,11 @@ public class Ball implements Runnable {
     public double getYDirection() {
       return yDirection;
     }
-
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
         g.setFont(stringFont);
-        g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        //g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
         if (!gameRun) {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
@@ -86,7 +84,7 @@ public class Ball implements Runnable {
     public void collision() {
 
         if (ball.intersects(p1.paddle)) {
-            turn();
+            setXDirection(+1);
             // be safe
             ball.x=ball.x+Pong.paddle_width;
             incSpeed();
@@ -95,7 +93,7 @@ public class Ball implements Runnable {
         }
 
         if (ball.intersects(p2.paddle)) {
-            turn();
+            setXDirection(-1);
 
             // be safe
             ball.x=ball.x-Pong.paddle_width;
@@ -170,12 +168,12 @@ public void startGame()
             collision();
             ballPosY = ballPosY + yDirection;
             //System.out.println(xDirection);
-            ball.x += getStep();
+            ball.x += xDirection;
             ball.y = (int) ballPosY;
 
             //bounce the ball when it hits the edge of the screen
             if (ball.x <= Pong.border_Left) {
-                turn();
+                setXDirection(+1);
                 p2score++;
                 if (p2score >=MAXP)
                     win();
@@ -185,7 +183,7 @@ public void startGame()
                 }
             }
             if (ball.x >= Pong.border_Right) {
-                turn();
+                setXDirection(-1);
                 p1score++;
                 if (p1score >=MAXP)
                     win();
@@ -221,14 +219,6 @@ public void startGame()
 
 
     }
-    public int getStep()
-    {
-        return xStep;
-    }
-    public void turn()
-    {
-        xStep=xStep*-1;
-    }
 public void anSpiel(int a)
 {
     //System.out.println("Anspiel:"+a);
@@ -243,10 +233,9 @@ public void anSpiel(int a)
                 //final long INTERVAL = 10000000;
                  start = System.nanoTime();
                  end=0;
-
-                 int mills=wait/1000;
-                 int nanos=wait-(mills*1000);
-                 Thread.sleep(mills,wait);
+                do{
+                    end = System.nanoTime();
+                }while(start + wait >= end);
             }
         } catch (Exception e) {
             System.out.println("Ball:"+e.getMessage());
