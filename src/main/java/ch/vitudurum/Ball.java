@@ -21,7 +21,7 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 2000000;
+    int initSpeed = 2500000;
     //int incrVal = 300000;
     double incFact = 0.97;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
@@ -101,7 +101,6 @@ public class Ball implements Runnable {
 
         if (ball.intersects(p2.paddle)) {
             turn();
-
             // be safe
             ball.x=ball.x-Pong.paddle_width;
             incSpeed();
@@ -237,7 +236,7 @@ public void anSpiel(int a)
         try {
             while (true) {
                 move();                //Thread.sleep((long) wait,999999);
-                p.repaint();
+                p.revalidate();
                 //final long INTERVAL = 10000000;
                  start = System.nanoTime();
                  end=0;
