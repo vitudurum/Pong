@@ -21,9 +21,9 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 4000000;
+    int initSpeed = 8000;
     //int incrVal = 300000;
-    double incFact = 0.97;
+    double incFact = 0.9;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Font stringFontEnde = new Font("SansSerif", Font.PLAIN, 50);
     Rectangle ball;
@@ -60,7 +60,7 @@ public class Ball implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
         g.setFont(stringFont);
-        //g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
         if (!gameRun) {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
@@ -243,10 +243,10 @@ public void anSpiel(int a)
                 //final long INTERVAL = 10000000;
                  start = System.nanoTime();
                  end=0;
-                do{
-                    Thread.sleep(1);
-                    end = System.nanoTime();
-                }while(start + wait >= end);
+
+                 int mills=wait/1000;
+                 int nanos=wait-(mills*1000);
+                 Thread.sleep(mills,wait);
             }
         } catch (Exception e) {
             System.out.println("Ball:"+e.getMessage());
