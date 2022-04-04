@@ -29,7 +29,7 @@ public class Pong extends JFrame  {
     Graphics dbGraphics;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 180);
     //ball object
-    private static Ball b = new Ball(250, 250);
+    Ball b;
     Rectangle border;
     //String NamePLayer1;
     //String NamePLayer2;
@@ -72,7 +72,7 @@ public class Pong extends JFrame  {
     public static void main(String[] args) {
 
         Pong pg = new Pong();
-
+        Ball b = new Ball(pg,250, 250);
         //create and start threads.
         Thread ball = new Thread(b);
         ball.start();

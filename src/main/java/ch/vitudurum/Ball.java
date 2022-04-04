@@ -33,8 +33,10 @@ public class Ball implements Runnable {
     boolean gameRun=true;
     int anspiel=0;
     int step=1;
+    Pong p;
 
-    public Ball(int x, int y) {
+    public Ball(Pong p, int x, int y) {
+        this.p=p;
         p1score = p2score = 0;
         this.x = x;
         this.y = y;
@@ -235,6 +237,7 @@ public void anSpiel(int a)
         try {
             while (true) {
                 move();                //Thread.sleep((long) wait,999999);
+                p.repaint();
                 //final long INTERVAL = 10000000;
                  start = System.nanoTime();
                  end=0;
