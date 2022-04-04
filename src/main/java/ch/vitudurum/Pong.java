@@ -15,7 +15,7 @@ public class Pong extends JFrame  {
     //screen size variables.
     //static int gWidth = 1920;
     //static int gHeight = 1080;
-    static int gWidth = 1200;
+    static int gWidth = 1580;
     static int gHeight = 1000;
     static int border_Up = 28;
     static int border_Down = gHeight - 30;
@@ -29,7 +29,7 @@ public class Pong extends JFrame  {
     Graphics dbGraphics;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 180);
     //ball object
-    private static Ball b = new Ball(250, 200);
+    private static Ball b = new Ball(250, 250);
     Rectangle border;
     //String NamePLayer1;
     //String NamePLayer2;
