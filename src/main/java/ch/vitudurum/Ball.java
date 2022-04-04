@@ -21,7 +21,7 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 2000000;
+    int initSpeed = 4000000;
     //int incrVal = 300000;
     double incFact = 0.97;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
@@ -32,7 +32,7 @@ public class Ball implements Runnable {
     double ballPosY=Pong.gHeight/2;
     boolean gameRun=true;
     int anspiel=0;
-    int xStep=1;
+    int xStep=2;
 
     public Ball(int x, int y) {
         p1score = p2score = 0;
@@ -175,7 +175,7 @@ public void startGame()
 
             //bounce the ball when it hits the edge of the screen
             if (ball.x <= Pong.border_Left) {
-                setXDirection(+xStep);
+                turn();
                 p2score++;
                 if (p2score >=MAXP)
                     win();
@@ -185,7 +185,7 @@ public void startGame()
                 }
             }
             if (ball.x >= Pong.border_Right) {
-                setXDirection(-xStep);
+                turn();
                 p1score++;
                 if (p1score >=MAXP)
                     win();
