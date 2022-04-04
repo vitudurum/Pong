@@ -75,7 +75,7 @@ public class Pong extends JFrame  {
 
         //create and start threads.
         Thread ball = new Thread(b);
-        //ball.start();
+        ball.start();
         Thread p1 = new Thread(b.p1);
         Thread p2 = new Thread(b.p2);
         Thread a = new Thread(adc);
