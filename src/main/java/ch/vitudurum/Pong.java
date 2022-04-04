@@ -103,7 +103,7 @@ public class Pong extends JFrame  {
         g.drawString(b.p1score + ":" + b.p2score, this.getWidth() / 2 - 80, this.getHeight() / 2);
         g.drawRect(8, 10, getWidth() - 18, getHeight() - 20);
         repaint();
-        System.out.print(".");
+       // System.out.print(".");
     }
 
 
