@@ -54,6 +54,7 @@ public class Ball implements Runnable {
     public double getYDirection() {
       return yDirection;
     }
+
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);

@@ -10,13 +10,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 
-public class Pong extends JFrame {
+public class Pong extends JFrame  {
 
     //screen size variables.
     //static int gWidth = 1920;
     //static int gHeight = 1080;
     static int gWidth = 1780;
-    static int gHeight = 1024;
+    static int gHeight = 1050;
     static int border_Up = 28;
     static int border_Down = gHeight - 30;
     static int border_Left = 0;
@@ -34,7 +34,7 @@ public class Pong extends JFrame {
     //String NamePLayer1;
     //String NamePLayer2;
     static public Sound sound;
-
+    Graphics aa;
     //constructor for window
     public Pong() {
         try {
@@ -66,6 +66,7 @@ public class Pong extends JFrame {
         this.addKeyListener(new AL());
 
         adc = new ADCReader(this);
+
     }
 
     public static void main(String[] args) {
@@ -74,17 +75,19 @@ public class Pong extends JFrame {
 
         //create and start threads.
         Thread ball = new Thread(b);
-        ball.start();
+        //ball.start();
         Thread p1 = new Thread(b.p1);
         Thread p2 = new Thread(b.p2);
         Thread a = new Thread(adc);
-        p2.start();
-        p1.start();
-        a.start();
+        //p2.start();
+        //p1.start();
+        //a.start();
+
     }
 
     @Override
     public void paint(Graphics g) {
+        aa=g;
         dbImage = createImage(getWidth(), getHeight());
         dbGraphics = dbImage.getGraphics();
         draw(dbGraphics);
@@ -100,8 +103,9 @@ public class Pong extends JFrame {
         g.drawString(b.p1score + ":" + b.p2score, this.getWidth() / 2 - 80, this.getHeight() / 2);
         g.drawRect(8, 10, getWidth() - 18, getHeight() - 20);
         repaint();
-
+        System.out.print(".");
     }
+
 
     public class AL extends KeyAdapter {
         @Override
