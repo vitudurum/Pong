@@ -42,12 +42,14 @@ public class Pong extends JFrame  {
             //sound = new Sound();
             //sound.play();
             b = new Ball(this,250, 250);
-            //create and start threads.
+            adc = new ADCReader(this);
+
+        //create and start threads.
             ball= new Thread(b);
-            ball.start();
             p1 = new Thread(b.p1);
             p2 = new Thread(b.p2);
             a = new Thread(adc);
+            ball.start();
             p2.start();
             p1.start();
             a.start();
@@ -77,8 +79,6 @@ public class Pong extends JFrame  {
         this.setBackground(Color.DARK_GRAY);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(new AL());
-
-        adc = new ADCReader(this);
 
     }
 
