@@ -35,12 +35,22 @@ public class Pong extends JFrame  {
     //String NamePLayer2;
     static public Sound sound;
     Graphics aa;
+    Thread ball,p1,p2,a;
     //constructor for window
     public Pong() {
         try {
             sound = new Sound();
             //sound.play();
-
+            b = new Ball(this,250, 250);
+            //create and start threads.
+            ball= new Thread(b);
+            ball.start();
+            p1 = new Thread(b.p1);
+            p2 = new Thread(b.p2);
+            a = new Thread(adc);
+            p2.start();
+            p1.start();
+            a.start();
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -72,17 +82,6 @@ public class Pong extends JFrame  {
     public static void main(String[] args) {
 
         Pong pg = new Pong();
-        Ball b = new Ball(pg,250, 250);
-        //create and start threads.
-        Thread ball = new Thread(b);
-        ball.start();
-        Thread p1 = new Thread(b.p1);
-        Thread p2 = new Thread(b.p2);
-        Thread a = new Thread(adc);
-        p2.start();
-        p1.start();
-        a.start();
-
     }
 
     @Override
