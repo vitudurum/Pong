@@ -120,7 +120,7 @@ public class Paddle implements Runnable{
 		try {
 			while(true) {
 				move();
-				Thread.sleep(10);
+				Thread.sleep(20);
 			}
 		} catch(Exception e) { System.err.println(e.getMessage()); }
 	}
