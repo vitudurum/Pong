@@ -50,8 +50,8 @@ public class Pong extends JFrame  {
             p2 = new Thread(b.p2);
             a = new Thread(adc);
             ball.start();
-            p2.start();
-            p1.start();
+            //p2.start();
+            //p1.start();
             a.start();
             /*
         } catch (UnsupportedAudioFileException e) {
