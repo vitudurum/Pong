@@ -32,6 +32,7 @@ public class Ball implements Runnable {
     double ballPosY=Pong.gHeight/2;
     boolean gameRun=true;
     int anspiel=0;
+    int step=1;
 
     public Ball(int x, int y) {
         p1score = p2score = 0;
@@ -58,7 +59,7 @@ public class Ball implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
         g.setFont(stringFont);
-        //g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
         if (!gameRun) {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
@@ -80,11 +81,15 @@ public class Ball implements Runnable {
     public double getSpeed() {
         return wait;
     }
+    public void turn()
+    {
+        step=step*-1;
+    }
 
     public void collision() {
 
         if (ball.intersects(p1.paddle)) {
-            setXDirection(+1);
+            turn();
             // be safe
             ball.x=ball.x+Pong.paddle_width;
             incSpeed();
@@ -93,7 +98,7 @@ public class Ball implements Runnable {
         }
 
         if (ball.intersects(p2.paddle)) {
-            setXDirection(-1);
+            turn();
 
             // be safe
             ball.x=ball.x-Pong.paddle_width;
@@ -168,12 +173,12 @@ public void startGame()
             collision();
             ballPosY = ballPosY + yDirection;
             //System.out.println(xDirection);
-            ball.x += xDirection;
+            ball.x += step;
             ball.y = (int) ballPosY;
 
             //bounce the ball when it hits the edge of the screen
             if (ball.x <= Pong.border_Left) {
-                setXDirection(+1);
+                turn();
                 p2score++;
                 if (p2score >=MAXP)
                     win();
@@ -183,7 +188,7 @@ public void startGame()
                 }
             }
             if (ball.x >= Pong.border_Right) {
-                setXDirection(-1);
+                turn();
                 p1score++;
                 if (p1score >=MAXP)
                     win();
