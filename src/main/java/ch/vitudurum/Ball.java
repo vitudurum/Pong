@@ -235,6 +235,7 @@ public void anSpiel(int a)
                  start = System.nanoTime();
                  end=0;
                 do{
+                    Thread.sleep(50);
                     end = System.nanoTime();
                 }while(start + wait >= end);
             }
