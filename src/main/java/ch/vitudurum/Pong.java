@@ -38,8 +38,8 @@ public class Pong extends JFrame  {
     Thread ball,p1,p2,a;
     //constructor for window
     public Pong() {
-        try {
-            sound = new Sound();
+      //  try {
+            //sound = new Sound();
             //sound.play();
             b = new Ball(this,250, 250);
             //create and start threads.
@@ -51,6 +51,7 @@ public class Pong extends JFrame  {
             p2.start();
             p1.start();
             a.start();
+            /*
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -58,6 +59,8 @@ public class Pong extends JFrame  {
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
+        */
+
 		/*
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Name Player 1:");
