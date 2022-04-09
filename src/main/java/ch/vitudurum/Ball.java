@@ -21,7 +21,7 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 3000000;
+    int initSpeed = 2500000;
     //int incrVal = 300000;
     double incFact = 0.97;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
