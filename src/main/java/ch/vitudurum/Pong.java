@@ -15,10 +15,10 @@ public class Pong extends JFrame  {
     //screen size variables.
     //static int gWidth = 1920;
     //static int gHeight = 1080;
-    static int gWidth = 1740;
+    static int gWidth = 1750;
     static int gHeight = 1060;
-    static int border_Up = 28;
-    static int border_Down = gHeight - 30;
+    static int border_Up = 35;
+    static int border_Down = gHeight - 50;
     static int border_Left = 0;
     static int border_Right = gWidth;
     static int paddle_height = 180;
@@ -103,7 +103,7 @@ public class Pong extends JFrame  {
         g.setFont(stringFont);
         g.setColor(Color.WHITE);
         g.drawString(b.p1score + ":" + b.p2score, this.getWidth() / 2 - 80, this.getHeight() / 2);
-        g.drawRect(8, 10, getWidth() - 18, getHeight() - 20);
+        g.drawRect(8, 35, getWidth() - 18, getHeight() - 50);
         repaint();
        // System.out.print(".");
     }
