@@ -235,8 +235,8 @@ public void anSpiel(int a)
         long start, end;
         try {
             while (true) {
-                move();
-                p.repaint();
+                if ( gameRun) move();
+                //p.repaint();
                 //Thread.sleep((long) wait,999999);
                 //p.revalidate();
                 //final long INTERVAL = 10000000;
