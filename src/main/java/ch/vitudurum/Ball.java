@@ -43,7 +43,7 @@ public class Ball implements Runnable {
 
 
         //create "ball"
-        ball = new Rectangle(this.x, this.y, 25, 25);
+        ball = new Rectangle(this.x, this.y, 35, 35);
      resetBall();
     }
 
@@ -211,14 +211,14 @@ public void startGame()
         if (anspiel==1)
         {
             //System.out.println("Anspiel 1");
-            ball.x =p1.paddle.x+20;
+            ball.x =p1.paddle.x+ball.width;
             ball.y =p1.paddle.y+p1.paddle.height/2-ball.height/2;
             ballPosY=ball.y;
         }
         if (anspiel==2)
         {
             //System.out.println("Anspiel 2");
-            ball.x =p2.paddle.x-20;
+            ball.x =p2.paddle.x-ball.width-5;
             ball.y =p2.paddle.y+p2.paddle.height/2-ball.height/2;
             ballPosY=ball.y;
         }
