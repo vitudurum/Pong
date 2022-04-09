@@ -16,7 +16,7 @@ public class Pong extends JFrame  {
     //static int gWidth = 1920;
     //static int gHeight = 1080;
     static int gWidth = 1560;
-    static int gHeight = 1000;
+    static int gHeight = 1040;
     static int border_Up = 28;
     static int border_Down = gHeight - 30;
     static int border_Left = 0;

@@ -61,7 +61,7 @@ public class Ball implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
         g.setFont(stringFont);
-        g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
+        //g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
         if (!gameRun) {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
