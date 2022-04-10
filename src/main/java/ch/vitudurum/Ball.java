@@ -34,13 +34,17 @@ public class Ball implements Runnable {
    // int anspiel=0;
     int step=1;
     Pong p;
-    int mode=0;
+    private int mode=0;
     static int MODE_RUN=0;
-    static int MODE_ANSPIEL_1=1;
-    static int MODE_ANSPIEL_2=2;
-    static int MODE_STARTGAME=5;
-    static int MODE_END=10;
-    static int MODE_BOOST=20;
+    static int MODE_BOOST=2;
+    static int MODE_ANSPIEL_1=10;
+    static int MODE_ANSPIEL_2=20;
+    static int MODE_STARTGAME=50;
+    static int MODE_END=100;
+
+
+    int boostDuration=1500;
+    long boostStartTime;
 
     public Ball(Pong p, int x, int y) {
         this.p=p;
@@ -73,6 +77,11 @@ public class Ball implements Runnable {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
             g.drawString("Game over",Pong.gWidth / 2 - 80,300);
+        }
+        if (mode==MODE_BOOST) {
+            g.setColor(Color.RED);
+            g.setFont(stringFontEnde);
+            g.drawString("Boost activated", Pong.gWidth / 2 - 100, 300);
         }
     }
 
@@ -161,22 +170,22 @@ public void startGame()
 
         if (mode==MODE_STARTGAME) {
             startGame();
-
-        }
-        if (mode==MODE_ANSPIEL_1)
-        {
-          }
-        if (mode==MODE_ANSPIEL_2)
-        {
-
         }
 
-        if (mode==MODE_RUN)
+        if (mode==MODE_RUN || mode==MODE_BOOST)
         {
             collision();
-            ballPosY = ballPosY + yDirection;
             //System.out.println(xDirection);
-            ball.x += step;
+           if (mode==MODE_RUN){
+               ball.x += step;
+               ballPosY = ballPosY + yDirection;
+           }
+            if (mode==MODE_BOOST)
+            {
+                ball.x =ball.x+ (2*step);
+                ballPosY = ballPosY + (2*yDirection);
+            }
+
             ball.y = (int) ballPosY;
 
             //bounce the ball when it hits the edge of the screen
@@ -231,7 +240,9 @@ public void startGame()
         long start, end;
         try {
             while (true) {
-                System.out.println("Mode:"+mode);
+               // System.out.println("Mode:"+mode);
+                if (mode==MODE_BOOST && System.currentTimeMillis()>boostStartTime+boostDuration)
+                    mode=MODE_RUN;
                 move();
                 //p.repaint();
                 //Thread.sleep((long) wait,999999);
@@ -261,4 +272,14 @@ public void startGame()
   {
       mode=m;
   }
+    public int getMode()
+    {
+        return mode;
+    }
+    public void setBoostMode()
+    {
+        mode=MODE_BOOST;
+        boostStartTime=System.currentTimeMillis();
+
+    }
 }

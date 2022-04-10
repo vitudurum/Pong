@@ -13,10 +13,10 @@ import javax.swing.*;
 public class Pong extends JFrame  {
 
     //screen size variables.
-    //static int gWidth = 1760;
-    //static int gHeight = 1060;
-    static int gWidth = 1260;
+    static int gWidth = 1760;
     static int gHeight = 1060;
+    //static int gWidth = 1260;
+    //static int gHeight = 1060;
     static int border_Up = 35;
     static int border_Down = gHeight - 50;
     static int border_Left = 0;

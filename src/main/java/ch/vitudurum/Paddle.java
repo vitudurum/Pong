@@ -33,11 +33,12 @@ public class Paddle implements Runnable{
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 		    startGame=true;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_1) {
-			if (id==0) ball.setMode(Ball.MODE_ANSPIEL_1);
+		if (e.getKeyCode() == KeyEvent.VK_1 && ball.getMode()==Ball.MODE_ANSPIEL_1) {
+			ball.setBoostMode();
+
 		}
-		if (e.getKeyCode() == KeyEvent.VK_2) {
-			if (id==1) ball.setMode(Ball.MODE_ANSPIEL_2);
+		if (e.getKeyCode() == KeyEvent.VK_2 && ball.getMode()==Ball.MODE_ANSPIEL_2) {
+			ball.setBoostMode();
 
 		}
 
