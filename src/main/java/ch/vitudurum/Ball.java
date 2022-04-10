@@ -30,10 +30,17 @@ public class Ball implements Runnable {
     int wait=initSpeed;
     Random r;
     double ballPosY=Pong.gHeight/2;
-    boolean gameRun=true;
-    int anspiel=0;
+    //boolean gameRun=true;
+   // int anspiel=0;
     int step=1;
     Pong p;
+    int mode=0;
+    static int MODE_RUN=0;
+    static int MODE_ANSPIEL_1=1;
+    static int MODE_ANSPIEL_2=2;
+    static int MODE_STARTGAME=5;
+    static int MODE_END=10;
+    static int MODE_BOOST=20;
 
     public Ball(Pong p, int x, int y) {
         this.p=p;
@@ -62,7 +69,7 @@ public class Ball implements Runnable {
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
         g.setFont(stringFont);
         //g.drawString("Speed:" + getSpeed(), Pong.gWidth / 2 - 10, Pong.gHeight / 2 + 50);
-        if (!gameRun) {
+        if (mode==MODE_END) {
             g.setColor(Color.RED);
             g.setFont(stringFontEnde);
             g.drawString("Game over",Pong.gWidth / 2 - 80,300);
@@ -131,7 +138,7 @@ public class Ball implements Runnable {
     }
 
 public void win(){
-        gameRun=false;
+        mode=MODE_END;
         setXDirection(0);
         setYDirection(0);
      ball.x = Pong.gWidth/2;
@@ -141,35 +148,30 @@ public void win(){
 public void startGame()
 {
     System.out.println("Starting Game...");
-    anspiel=0;
     p1score=0;
     p2score=0;
     p1.startGame=false;
     p2.startGame=false;
-    gameRun=true;
     resetBall();
     resetSpeed();
+    //mode=MODE_ANSPIEL;
 }
     public void move() {
 
 
-        if (p1.startGame==true) {
+        if (mode==MODE_STARTGAME) {
             startGame();
+
         }
-        if (p1.getKick()==true && anspiel==1)
+        if (mode==MODE_ANSPIEL_1)
         {
-             anspiel=0;
-            p1.setKick(false);
-            p2.setKick(false);
-        }
-        if (p2.getKick()==true && anspiel==2)
+          }
+        if (mode==MODE_ANSPIEL_2)
         {
-            anspiel=0;
-            p1.setKick(false);
-            p2.setKick(false);
+
         }
 
-        if (anspiel==0)
+        if (mode==MODE_RUN)
         {
             collision();
             ballPosY = ballPosY + yDirection;
@@ -185,7 +187,7 @@ public void startGame()
                     win();
                 else {
                     resetSpeed();
-                    anSpiel(1);
+                    mode=MODE_ANSPIEL_1;
                 }
             }
             if (ball.x >= Pong.border_Right) {
@@ -195,7 +197,7 @@ public void startGame()
                     win();
                 else {
                     resetSpeed();
-                    anSpiel(2);
+                    mode=MODE_ANSPIEL_2;
                 }
             }
 
@@ -208,14 +210,14 @@ public void startGame()
             }
 
         }
-        if (anspiel==1)
+        if (mode==MODE_ANSPIEL_1)
         {
             //System.out.println("Anspiel 1");
             ball.x =p1.paddle.x+ball.width;
             ball.y =p1.paddle.y+p1.paddle.height/2-ball.height/2;
             ballPosY=ball.y;
         }
-        if (anspiel==2)
+        if (mode==MODE_ANSPIEL_2)
         {
             //System.out.println("Anspiel 2");
             ball.x =p2.paddle.x-ball.width-5;
@@ -225,17 +227,12 @@ public void startGame()
 
 
     }
-public void anSpiel(int a)
-{
-    //System.out.println("Anspiel:"+a);
-    anspiel=a;
-}
-    @Override
     public void run() {
         long start, end;
         try {
             while (true) {
-                if ( gameRun) move();
+                System.out.println("Mode:"+mode);
+                move();
                 //p.repaint();
                 //Thread.sleep((long) wait,999999);
                 //p.revalidate();
@@ -259,12 +256,9 @@ public void anSpiel(int a)
 	{
 		return p2;
 	}
-    public void Kick(int id)
-    {
-        if (id==0)
-            p1.setKick(true);
-        if (id==1)
-            p2.setKick(true);
 
-    }
+  public void setMode(int m)
+  {
+      mode=m;
+  }
 }
