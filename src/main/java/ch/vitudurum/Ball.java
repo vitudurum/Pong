@@ -21,9 +21,9 @@ public class Ball implements Runnable {
 
 	public Paddle p1 = new Paddle(Pong.border_Left+15, 25, 0,this);
 	public Paddle p2 = new Paddle(Pong.border_Right-Pong.paddle_width-15, 25, 1,this);
-    int initSpeed = 2500000;
+    int initSpeed = 1800000;
     //int incrVal = 300000;
-    double incFact = 0.97;
+    double incFact = 0.95;
     Font stringFont = new Font("SansSerif", Font.PLAIN, 20);
     Font stringFontEnde = new Font("SansSerif", Font.PLAIN, 50);
     Rectangle ball;
@@ -37,14 +37,11 @@ public class Ball implements Runnable {
     private int mode=0;
     static int MODE_RUN=0;
     static int MODE_BOOST=2;
+    static double BOOST_FACTOR=2;
     static int MODE_ANSPIEL_1=10;
     static int MODE_ANSPIEL_2=20;
     static int MODE_STARTGAME=50;
     static int MODE_END=100;
-
-
-    int boostDuration=1500;
-    long boostStartTime;
 
     public Ball(Pong p, int x, int y) {
         this.p=p;
@@ -108,6 +105,7 @@ public class Ball implements Runnable {
 
         if (ball.intersects(p1.paddle)) {
             turn();
+            mode=MODE_RUN;
             // be safe
             ball.x=ball.x+Pong.paddle_width;
             incSpeed();
@@ -117,6 +115,7 @@ public class Ball implements Runnable {
 
         if (ball.intersects(p2.paddle)) {
             turn();
+            mode=MODE_RUN;
             // be safe
             ball.x=ball.x-Pong.paddle_width;
             incSpeed();
@@ -154,16 +153,16 @@ public void win(){
     ballPosY=  Pong.gHeight/2;
 
 }
-public void startGame()
-{
+public void startGame() {
     System.out.println("Starting Game...");
-    p1score=0;
-    p2score=0;
-    p1.startGame=false;
-    p2.startGame=false;
+    p1score = 0;
+    p2score = 0;
+    p1.startGame = false;
+    p2.startGame = false;
     resetBall();
     resetSpeed();
     //mode=MODE_ANSPIEL;
+    mode = MODE_RUN;
 }
     public void move() {
 
@@ -182,8 +181,9 @@ public void startGame()
            }
             if (mode==MODE_BOOST)
             {
-                ball.x =ball.x+ (2*step);
-                ballPosY = ballPosY + (2*yDirection);
+                int rs=
+                ball.x = ball.x+(int) (step*BOOST_FACTOR);
+                ballPosY = ballPosY + (BOOST_FACTOR*yDirection);
             }
 
             ball.y = (int) ballPosY;
@@ -241,8 +241,6 @@ public void startGame()
         try {
             while (true) {
                // System.out.println("Mode:"+mode);
-                if (mode==MODE_BOOST && System.currentTimeMillis()>boostStartTime+boostDuration)
-                    mode=MODE_RUN;
                 move();
                 //p.repaint();
                 //Thread.sleep((long) wait,999999);
@@ -279,7 +277,5 @@ public void startGame()
     public void setBoostMode()
     {
         mode=MODE_BOOST;
-        boostStartTime=System.currentTimeMillis();
-
     }
 }
